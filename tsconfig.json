@@ -18,7 +18,8 @@
     "paths": {
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@lib/*": ["lib/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/index.jsx"],
