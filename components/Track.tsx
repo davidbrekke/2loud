@@ -7,6 +7,8 @@ import {
 import Image from 'next/image'
 import { useState } from 'react'
 
+import { downloadTrack } from '@lib/downloadTrack'
+
 const Track = ({ track }) => {
   return (
     <TrackContainer>
@@ -29,7 +31,10 @@ const TrackIcons = () => (
   <div className="flex flex-col space-y-4 items-center">
     <FireIcon className="w-7 h-7 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110 hover:text-orange-300" />
     <PlayPause />
-    <DownloadIcon className="w-7 h-7 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110" />
+    <DownloadIcon
+      className="w-7 h-7 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110"
+      onClick={downloadTrack}
+    />
   </div>
 )
 
