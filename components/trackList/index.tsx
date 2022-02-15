@@ -1,7 +1,7 @@
-import Track from '@components/Track'
+import Track from '@components/track'
 
 const TrackList = ({ tracks }) => (
-  <div className="flex flex-col w-full space-y-6 overflow-scroll py-24">
+  <div className="flex flex-col items-center w-screen space-y-6 overflow-scroll py-24">
     {tracks.map((track) => (
       <Track key={track.id} track={track} />
     ))}

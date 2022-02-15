@@ -1,7 +1,5 @@
-import Image from 'next/image'
-
 import Layout from '@components/layout'
-import TrackList from '@components/TrackList'
+import TrackList from '@components/trackList'
 
 const tracks = [
   {
