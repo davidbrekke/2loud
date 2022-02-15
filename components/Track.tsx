@@ -2,7 +2,7 @@ import {
   FireIcon,
   PlayIcon,
   PauseIcon,
-  ShoppingBagIcon,
+  DownloadIcon,
 } from '@heroicons/react/outline'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -26,10 +26,10 @@ const TrackContainer = ({ children }) => (
 )
 
 const TrackIcons = () => (
-  <div className="flex flex-col space-y-4">
-    <FireIcon className="w-8 h-8 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110 hover:text-orange-300" />
+  <div className="flex flex-col space-y-4 items-center">
+    <FireIcon className="w-7 h-7 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110 hover:text-orange-300" />
     <PlayPause />
-    <ShoppingBagIcon className="w-8 h-8 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110" />
+    <DownloadIcon className="w-7 h-7 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110" />
   </div>
 )
 
@@ -37,12 +37,12 @@ const PlayPause = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   return isPlaying ? (
     <PauseIcon
-      className="w-8 h-8 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110"
+      className="w-10 h-10 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110"
       onClick={() => setIsPlaying(!isPlaying)}
     />
   ) : (
     <PlayIcon
-      className="w-8 h-8 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110"
+      className="w-10 h-10 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110"
       onClick={() => setIsPlaying(!isPlaying)}
     />
   )
