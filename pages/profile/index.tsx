@@ -1,15 +1,13 @@
 import Layout from '@components/layout'
 import { useAuth } from '@lib/hooks/useAuth'
-import { useRouter } from 'next/router'
 
 const Profile = () => {
-  const { session, user } = useAuth()
-  const router = useRouter()
+  const { user } = useAuth()
 
   return (
     <Layout>
-      <div className="h-screen flex flex-col justify-center">
-        <h1>{user?.id}</h1>
+      <div className="h-screen flex flex-col justify-center items-center">
+        <h1>welcome</h1>
         <h2>{user?.email}</h2>
       </div>
     </Layout>
