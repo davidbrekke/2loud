@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { supabase } from '@lib/supabase'
 
 const Auth = () => {
@@ -21,14 +21,17 @@ const Auth = () => {
       setEmail('')
     }
   }
+
   return (
-    <div className="h-screen flex flex-col justify-center items-center space-y-2 text-gray-800">
+    <div className="h-screen flex flex-col justify-center items-center space-y-4 text-gray-600">
       {emailSent ? (
-        <h1>check email for login link</h1>
+        <h1 className="text-3xl font-bold">🎉 check email for login link 🎉</h1>
       ) : (
         <>
-          <h1 className="text-2xl">enter email for magic link</h1>
-          <div className="flex flex-col">
+          <h1 className="text-2xl font-bold">
+            enter email to receive login link
+          </h1>
+          <div className="flex flex-col text-gray-500">
             <label htmlFor="email" className="pl-2">
               email
             </label>
@@ -42,7 +45,7 @@ const Auth = () => {
             />
           </div>
           <button
-            className="px-4 py-2 rounded-lg bg-white shadow-lg transition text-lg  hover:shadow-xl cursor-pointer"
+            className="px-4 py-2 rounded-lg text-gray-100 shadow-lg transition text-lg hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-400 via-indigo-400 to-indigo-500"
             onClick={(e) => {
               e.preventDefault()
               sendMagicLink(email)
