@@ -6,7 +6,7 @@ import TrackDetails from '@components/track/TrackDetails'
 const Track = ({ track }) => {
   return (
     <TrackContainer>
-      <CoverArt artwork={track.artwork} />
+      <CoverArt url={track.artwork_url} />
       <TrackDetails track={track} />
       <TrackIcons />
     </TrackContainer>
