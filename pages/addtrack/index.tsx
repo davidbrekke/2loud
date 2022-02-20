@@ -1,166 +1,103 @@
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 
-import { useState } from 'react'
 import Layout from '@components/layout'
-import { useAuth } from '@lib/hooks/useAuth'
-import { supabase } from '@lib/supabase'
+import { useAddTrack } from '@lib/hooks/useAddTrack'
 
 const AddTrack = () => {
-  const { user } = useAuth()
-  const router = useRouter()
+  const {
+    title,
+    setTitle,
+    artworkUrl,
+    artworkPreview,
+    audioUrl,
+    audioPreview,
+    uploadingArtwork,
+    uploadingAudio,
+    addingTrack,
+    handleArtworkChange,
+    handleAudioChange,
+    handleAddTrack,
+  } = useAddTrack()
 
-  const [title, setTitle] = useState('')
-  const [artworkUrl, setArtworkUrl] = useState(null)
-  const [artworkPreview, setArtworkPreview] = useState(null)
-  const [audioUrl, setAudioUrl] = useState(null)
-  const [audioPreview, setAudioPreview] = useState(null)
-  const [uploadingArtwork, setUploadingArtwork] = useState(false)
-  const [uploadingAudio, setUploadingAudio] = useState(false)
-  const [addingTrack, setAddingTrack] = useState(false)
-
-  const handleArtworkChange = async (e) => {
-    try {
-      setUploadingArtwork(true)
-
-      if (!e.target.files || e.target.files.length == 0) {
-        throw 'You must select an image to upload.'
-      }
-
-      const file = e.target.files[0]
-      setArtworkPreview(URL.createObjectURL(file))
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${user.id}-${Math.floor(
-        Math.random() * 10000
-      )}.${fileExt}`
-      const filePath = `${fileName}`
-      setArtworkUrl(filePath)
-
-      let { error: uploadError } = await supabase.storage
-        .from('artwork')
-        .upload(filePath, file)
-
-      if (uploadError) {
-        console.log('upload errorrrrr', uploadError)
-        throw uploadError
-      }
-    } catch (error) {
-      console.log(error.message)
-    } finally {
-      setUploadingArtwork(false)
-    }
-  }
-  const handleAudioChange = async (e) => {
-    try {
-      setUploadingAudio(true)
-
-      if (!e.target.files || e.target.files.length == 0) {
-        throw 'You must select an image to upload.'
-      }
-
-      const file = e.target.files[0]
-      setAudioPreview(URL.createObjectURL(file))
-
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${user.id}-${Math.floor(
-        Math.random() * 10000
-      )}.${fileExt}`
-      const filePath = `${fileName}`
-      setAudioUrl(filePath)
-
-      let { error: uploadError } = await supabase.storage
-        .from('audio')
-        .upload(filePath, file)
-
-      if (uploadError) {
-        console.log('upload errorrrrr', uploadError)
-        throw uploadError
-      }
-    } catch (error) {
-      console.log(error.message)
-    } finally {
-      setUploadingAudio(false)
-    }
-  }
-  const handleAddTrack = async () => {
-    try {
-      setAddingTrack(true)
-      let { error: uploadError } = await supabase.from('tracks').insert([
-        {
-          title,
-          artwork_url: artworkUrl,
-          audio_url: audioUrl,
-          artist_id: user.id,
-        },
-      ])
-
-      if (uploadError) {
-        throw uploadError
-      }
-    } catch (error) {
-      console.log(error.message)
-    } finally {
-      setTitle('')
-      setArtworkUrl(null)
-      setArtworkPreview(null)
-      setAudioUrl(null)
-      setAudioPreview(null)
-      setAddingTrack(false)
-      router.push('/profile')
-    }
-  }
+  const isFormComplete = title && audioUrl && artworkUrl
 
   return (
     <Layout>
-      <div className="h-screen flex flex-col justify-center items-center">
+      <div className="h-screen flex flex-col justify-center items-center text-gray-700">
         {addingTrack ? (
           <h1>adding track</h1>
         ) : (
           <>
-            <h1>Add Track</h1>
-            <div>
-              <div>
-                <label htmlFor="title">title</label>
+            <h1 className="text-3xl font-bold mb-4">add track</h1>
+            <div className="flex flex-col items-center space-y-6">
+              {/* TITLE */}
+              <div className="flex flex-col">
+                <label htmlFor="title" className="text-lg text-gray-500 ml-2">
+                  title
+                </label>
                 <input
                   type="text"
                   value={title}
                   name="title"
+                  className="rounded-md text-xl outline-none bg-white bg-opacity-30 py-2 px-4 shadow-lg transition focus:shadow-2xl"
+                  placeholder="title..."
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
-              <div>
-                <label htmlFor="title">artwork</label>
-                <input
-                  type="file"
-                  name="artwork"
-                  accept="image/*"
-                  onChange={handleArtworkChange}
-                />
-                {uploadingArtwork && <span>uploading</span>}
-                {artworkPreview && (
-                  <Image width={150} height={150} src={artworkPreview} />
-                )}
+              {/* FILES */}
+              <div className="flex flex-col md:flex-row">
+                {/* ARTWORK */}
+                <div className="flex flex-col items-center p-2">
+                  <label htmlFor="title" className="text-lg text-gray-500 ml-2">
+                    artwork
+                  </label>
+                  <input
+                    type="file"
+                    name="artwork"
+                    accept="image/*"
+                    onChange={handleArtworkChange}
+                    className="text-gray-600 p-2"
+                  />
+                  {artworkPreview ? (
+                    <Image width={200} height={200} src={artworkPreview} />
+                  ) : (
+                    <div className="overflow-hidden rounded-xl w-48 h-48 bg-white bg-opacity-30 text-gray-400 flex items-center justify-center shadow-lg">
+                      preview
+                    </div>
+                  )}
+                  {uploadingArtwork && <span>uploading</span>}
+                </div>
+                {/* AUDIO */}
+                <div className="flex flex-col items-center p-2">
+                  <label htmlFor="title" className="text-lg text-gray-500 ml-2">
+                    audio
+                  </label>
+                  <input
+                    type="file"
+                    name="audio"
+                    accept="audio/*"
+                    onChange={handleAudioChange}
+                    className="text-gray-600 p-2"
+                  />
+                  {audioPreview && <audio controls src={audioPreview} />}
+                  {uploadingAudio && <span>uploading</span>}
+                </div>
               </div>
-              <div>
-                <label htmlFor="title">audio</label>
-                <input
-                  type="file"
-                  name="audio"
-                  accept="audio/*"
-                  onChange={handleAudioChange}
-                />
-                {uploadingAudio && <span>uploading</span>}
-                {audioPreview && <audio controls src={audioPreview} />}
-              </div>
+
+              {/* SUBMIT */}
+              {isFormComplete ? (
+                <div
+                  onClick={handleAddTrack}
+                  className="px-4 py-2 rounded-lg text-gray-100 shadow-lg transition text-lg hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 via-indigo-400 to-indigo-500"
+                >
+                  add track
+                </div>
+              ) : (
+                <div className="px-4 py-2 rounded-lg text-gray-100 shadow-lg text-lg bg-white bg-opacity-30">
+                  add track
+                </div>
+              )}
             </div>
-            {title && audioUrl && artworkUrl && (
-              <div
-                onClick={handleAddTrack}
-                className="px-4 py-2 rounded-lg text-gray-100 shadow-lg transition text-lg hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 via-indigo-400 to-indigo-500"
-              >
-                add track
-              </div>
-            )}
           </>
         )}
       </div>
