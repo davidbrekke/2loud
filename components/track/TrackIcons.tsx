@@ -9,7 +9,7 @@ import FireTrack from '@components/track/FireTrack'
 import { downloadTrack } from '@lib/downloadTrack'
 import PlayPause from '@components/trackPlayer/PlayPause'
 import { useAuth } from '@lib/hooks/useAuth'
-import { useDeleteTrack } from '@lib/hooks/useDeleteTrack'
+import { deleteTrack } from '@lib/hooks/deleteTrack'
 import { TrackContext } from '@lib/contexts/TrackContext'
 
 const TrackIcons = () => {
@@ -28,7 +28,7 @@ const TrackIcons = () => {
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this track?')) return
 
-    const deletedTrackData = await useDeleteTrack(id)
+    const deletedTrackData = await deleteTrack(id)
     console.log('deletedTrackData', deletedTrackData)
     deletedTrackData && router.reload()
   }

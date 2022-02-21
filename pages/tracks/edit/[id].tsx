@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import Layout from '@components/layout'
 import { useEditTrack } from '@lib/hooks/useEditTrack'
-import { useTrack } from '@lib/hooks/useTrack'
+import { getTrack } from '@lib/hooks/getTrack'
 
 const EditTrack = ({ pageProps: { track } }) => {
   const {
@@ -60,7 +60,12 @@ const EditTrack = ({ pageProps: { track } }) => {
                     className="text-gray-600 p-2"
                   />
                   {artworkPreview ? (
-                    <Image width={200} height={200} src={artworkPreview} />
+                    <Image
+                      width={200}
+                      height={200}
+                      src={artworkPreview}
+                      alt="artwork preview"
+                    />
                   ) : (
                     <div className="overflow-hidden rounded-xl w-48 h-48 bg-white bg-opacity-30 text-gray-400 flex items-center justify-center shadow-lg">
                       preview
@@ -110,7 +115,7 @@ export default EditTrack
 
 export async function getServerSideProps({ params }) {
   const { id } = params
-  const trackData = await useTrack(id)
+  const trackData = await getTrack(id)
   return {
     props: {
       track: trackData[0],

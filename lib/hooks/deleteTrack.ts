@@ -1,6 +1,6 @@
 import { supabase } from '@lib/supabase'
 
-const useDeleteTrack = async (id) => {
+const deleteTrack = async (id) => {
   try {
     let { data: deletedTrackData, error: deletionError } = await supabase
       .from('tracks')
@@ -16,4 +16,4 @@ const useDeleteTrack = async (id) => {
   }
 }
 
-export { useDeleteTrack }
+export { deleteTrack }

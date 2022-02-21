@@ -34,6 +34,7 @@ const CoverArt = () => {
         width={200}
         height={200}
         className="rounded-2xl"
+        alt="cover art"
       />
     </div>
   ) : (

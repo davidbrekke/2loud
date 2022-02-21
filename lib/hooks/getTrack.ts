@@ -1,6 +1,6 @@
 import { supabase } from '@lib/supabase'
 
-const useTrack = async (id: string) => {
+const getTrack = async (id: string) => {
   try {
     let { data: trackData, error: trackError } = await supabase
       .from('tracks')
@@ -16,4 +16,4 @@ const useTrack = async (id: string) => {
   }
 }
 
-export { useTrack }
+export { getTrack }
