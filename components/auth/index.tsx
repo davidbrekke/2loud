@@ -25,7 +25,9 @@ const Auth = () => {
   return (
     <div className="h-screen flex flex-col justify-center items-center space-y-4 text-gray-600">
       {emailSent ? (
-        <h1 className="text-3xl font-bold">🎉 check email for login link 🎉</h1>
+        <h1 className="text-2xl md:text-3xl font-bold">
+          🎉 check email for login link 🎉
+        </h1>
       ) : (
         <>
           <h1 className="text-2xl font-bold">
