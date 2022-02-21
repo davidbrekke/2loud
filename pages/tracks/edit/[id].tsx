@@ -1,9 +1,10 @@
 import Image from 'next/image'
 
 import Layout from '@components/layout'
-import { useAddTrack } from '@lib/hooks/useAddTrack'
+import { useEditTrack } from '@lib/hooks/useEditTrack'
+import { getTrack } from '@lib/hooks/getTrack'
 
-const AddTrack = () => {
+const EditTrack = ({ pageProps: { track } }) => {
   const {
     title,
     setTitle,
@@ -13,22 +14,22 @@ const AddTrack = () => {
     audioPreview,
     uploadingArtwork,
     uploadingAudio,
-    addingTrack,
+    updatingTrack,
     handleArtworkChange,
     handleAudioChange,
-    handleAddTrack,
-  } = useAddTrack()
+    handleUpdateTrack,
+  } = useEditTrack(track)
 
   const isFormComplete = title && audioUrl && artworkUrl
 
   return (
     <Layout>
       <div className="h-screen flex flex-col justify-center items-center text-gray-700">
-        {addingTrack ? (
-          <h1>adding track</h1>
+        {updatingTrack ? (
+          <h1>updating track</h1>
         ) : (
           <>
-            <h1 className="text-3xl font-bold mb-4">add track</h1>
+            <h1 className="text-3xl font-bold mb-4">edit track</h1>
             <div className="flex flex-col items-center space-y-6">
               {/* TITLE */}
               <div className="flex flex-col">
@@ -92,14 +93,14 @@ const AddTrack = () => {
               {/* SUBMIT */}
               {isFormComplete ? (
                 <div
-                  onClick={handleAddTrack}
+                  onClick={handleUpdateTrack}
                   className="px-4 py-2 rounded-lg text-gray-100 shadow-lg transition text-lg hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 via-indigo-400 to-indigo-500"
                 >
-                  add track
+                  update track
                 </div>
               ) : (
                 <div className="px-4 py-2 rounded-lg text-gray-100 shadow-lg text-lg bg-white bg-opacity-30">
-                  add track
+                  update track
                 </div>
               )}
             </div>
@@ -110,4 +111,14 @@ const AddTrack = () => {
   )
 }
 
-export default AddTrack
+export default EditTrack
+
+export async function getServerSideProps({ params }) {
+  const { id } = params
+  const trackData = await getTrack(id)
+  return {
+    props: {
+      track: trackData[0],
+    },
+  }
+}

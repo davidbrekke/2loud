@@ -1,12 +1,17 @@
+import { useContext } from 'react'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { supabase } from '@lib/supabase'
-const CoverArt = ({ url }) => {
+import { TrackContext } from '@lib/contexts/TrackContext'
+
+const CoverArt = () => {
   const [coverArtUrl, setCoverArtUrl] = useState<string | null>(null)
 
+  const { artwork_url } = useContext(TrackContext)
+
   useEffect(() => {
-    if (url) downloadArtwork(url)
-  }, [url])
+    if (artwork_url) downloadArtwork(artwork_url)
+  }, [artwork_url])
 
   const downloadArtwork = async (path: string) => {
     try {
@@ -29,6 +34,7 @@ const CoverArt = ({ url }) => {
         width={200}
         height={200}
         className="rounded-2xl"
+        alt="cover art"
       />
     </div>
   ) : (
