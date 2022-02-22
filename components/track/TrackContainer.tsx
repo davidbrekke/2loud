@@ -6,7 +6,6 @@ import { downloadAudioAsUrl } from '@lib/downloadAudio'
 
 const TrackContainer = ({ children }) => {
   const track = useContext(TrackContext)
-
   const {
     currentTrack,
     setCurrentTrack,
@@ -16,11 +15,11 @@ const TrackContainer = ({ children }) => {
   } = useContext(GlobalTrackContext)
   return (
     <div
-      className={`flex flex-row cursor-pointer items-center justify-between p-4 md:p-8 space-x-2 rounded-3xl transition ${
+      className={`flex flex-row cursor-pointer items-center justify-between p-4 md:p-8 space-x-2 rounded-3xl transition hover:scale-105 ${
         currentTrack === track
-          ? 'bg-white bg-opacity-50 shadow-xl hover:shadow-2xl'
-          : 'bg-white bg-opacity-20 hover:bg-opacity-30'
-      } hover:scale-105`}
+          ? 'bg-white bg-opacity-40 shadow-xl hover:shadow-2xl'
+          : 'bg-white bg-opacity-20 hover:bg-opacity-30 shadow-lg hover:shadow-xl'
+      }`}
       onClick={async () => {
         if (isPlaying && currentTrack === track) return
         setIsPlaying(false)
