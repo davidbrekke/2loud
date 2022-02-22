@@ -1,17 +1,22 @@
 import { FireIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
+import { Icon } from '@components/icon'
 
 const FireTrack = () => {
   const [isFire, setIsFire] = useState(false)
   return isFire ? (
-    <FireIcon
-      className="w-7 h-7 text-orange-300 cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110 hover:text-orange-300"
+    <Icon
+      icon={<FireIcon />}
       onClick={() => setIsFire(!isFire)}
+      size="md"
+      color="orange"
     />
   ) : (
-    <FireIcon
-      className="w-7 h-7 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110 hover:text-orange-300"
+    <Icon
+      icon={<FireIcon />}
       onClick={() => setIsFire(!isFire)}
+      size="md"
+      color="white"
     />
   )
 }
