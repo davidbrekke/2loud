@@ -1,4 +1,4 @@
-import Header from '@components/layout/Header'
+import Header from '@components/layout/header'
 import AppContainer from '@components/layout/AppContainer'
 
 const Layout = ({ children }) => {

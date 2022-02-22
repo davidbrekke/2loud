@@ -7,14 +7,23 @@ import { TrashIcon } from '@heroicons/react/outline'
 import { Icon } from '@components/icon'
 import FireTrack from '@components/track/FireTrack'
 import { downloadTrack } from '@lib/downloadTrack'
-import PlayPause from '@components/trackPlayer/PlayPause'
 import { useAuth } from '@lib/hooks/useAuth'
 import { deleteTrack } from '@lib/hooks/deleteTrack'
 import { TrackContext } from '@lib/contexts/TrackContext'
+import { GlobalTrackContext } from '@lib/contexts/GlobalTrackContext'
 
 const TrackIcons = () => {
   const { session, user } = useAuth()
-  const { id, artist_id } = useContext(TrackContext)
+  const track = useContext(TrackContext)
+  const {
+    currentTrack,
+    setCurrentTrack,
+    isMuted,
+    setIsMuted,
+    setAudioPlayer,
+    audioUrl,
+    setAudioUrl,
+  } = useContext(GlobalTrackContext)
   const router = useRouter()
 
   const handleDownload = () => {
@@ -28,30 +37,40 @@ const TrackIcons = () => {
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this track?')) return
 
-    const deletedTrackData = await deleteTrack(id)
+    const deletedTrackData = await deleteTrack(track.id)
     console.log('deletedTrackData', deletedTrackData)
     deletedTrackData && router.reload()
   }
 
   return (
     <div className="flex flex-row items-center">
-      <div className="flex flex-col space-y-4 items-center">
+      <div className="flex flex-col space-y-10 items-center">
         <FireTrack />
-        <PlayPause />
-        <DownloadIcon
-          className="w-7 h-7 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-110"
+        <Icon
+          icon={<DownloadIcon />}
           onClick={handleDownload}
+          size="md"
+          color="white"
         />
       </div>
-      {user?.id === artist_id && (
-        <div className="flex flex-col space-y-6 items-center ml-4">
-          <Icon
-            icon={<PencilAltIcon />}
-            onClick={() => router.push(`/tracks/edit/${id}`)}
-            size="sm"
-          />
-          <Icon icon={<TrashIcon />} onClick={handleDelete} size="sm" />
-        </div>
+      {user?.id === track.artist_id && (
+        <>
+          <div className="border border-gray-50 border-opacity-30 h-28 mx-2 md:mx-6" />
+          <div className="flex flex-col space-y-10 items-center">
+            <Icon
+              icon={<PencilAltIcon />}
+              onClick={() => router.push(`/tracks/edit/${track.id}`)}
+              size="md"
+              color="white"
+            />
+            <Icon
+              icon={<TrashIcon />}
+              onClick={handleDelete}
+              size="md"
+              color="white"
+            />
+          </div>
+        </>
       )}
     </div>
   )
