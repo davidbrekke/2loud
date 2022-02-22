@@ -1,18 +1,29 @@
+import { useContext } from 'react'
 import { VolumeUpIcon, VolumeOffIcon } from '@heroicons/react/outline'
-import { useState } from 'react'
+import { Icon } from '@components/icon'
+import { GlobalTrackContext } from '@lib/contexts/GlobalTrackContext'
 
 const Volume = () => {
-  const [isMuted, setIsMuted] = useState(false)
+  const { isMuted, setIsMuted } = useContext(GlobalTrackContext)
+
+  const toggleVolume = () => {
+    const current = isMuted
+    setIsMuted(!current)
+  }
 
   return isMuted ? (
-    <VolumeUpIcon
-      className="w-8 h-8 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-125"
-      onClick={() => setIsMuted(!isMuted)}
+    <Icon
+      icon={<VolumeUpIcon />}
+      onClick={toggleVolume}
+      size="lg"
+      color="white"
     />
   ) : (
-    <VolumeOffIcon
-      className="w-8 h-8 text-white cursor-pointer transition drop-shadow hover:drop-shadow-xl hover:scale-125"
-      onClick={() => setIsMuted(!isMuted)}
+    <Icon
+      icon={<VolumeOffIcon />}
+      onClick={toggleVolume}
+      size="lg"
+      color="white"
     />
   )
 }
