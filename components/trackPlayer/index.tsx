@@ -8,7 +8,6 @@ import { downloadAudioAsUrl } from '@lib/downloadAudio'
 const TrackPlayer = () => {
   const {
     currentTrack,
-    setCurrentTrack,
     isPlaying,
     setIsPlaying,
     setAudioPlayer,
@@ -28,23 +27,25 @@ const TrackPlayer = () => {
 
   return (
     currentTrack && (
-      <div className="flex flex-row items-center w-full max-w-6xl justify-around py-4 absolute z-10 bottom-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
+      <div className="flex flex-row items-center w-full max-w-6xl justify-around p-2 absolute z-10 bottom-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
         <audio src={audioUrl} ref={audioPlayerRef} loop />
         <PlayPause
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
           audioPlayerRef={audioPlayerRef}
         />
-        <div className="flex flex-col space-y-2 items-center">
-          <h2>{currentTrack.title}</h2>
+        <div className="flex flex-col space-y-1 items-center">
+          <h2 className="text-xl md:text-2xl text-gray-600 font-bold truncate">
+            {currentTrack.title}
+          </h2>
           <input
             type="range"
-            className="w-72"
+            className="w-52 md:w-72"
             defaultValue="0"
             ref={progressBarRef}
             // onChange={changeRange}
           />
-          <div className="flex flex-row justify-between items-center w-full text-xs">
+          <div className="flex flex-row px-6 justify-between items-center w-full text-md md:text-lg text-gray-600">
             <span>00:00</span>
             <span>00:00</span>
           </div>
