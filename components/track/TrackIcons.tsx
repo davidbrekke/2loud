@@ -10,20 +10,11 @@ import { downloadTrack } from '@lib/downloadTrack'
 import { useAuth } from '@lib/hooks/useAuth'
 import { deleteTrack } from '@lib/hooks/deleteTrack'
 import { TrackContext } from '@lib/contexts/TrackContext'
-import { GlobalTrackContext } from '@lib/contexts/GlobalTrackContext'
 
 const TrackIcons = () => {
   const { session, user } = useAuth()
   const track = useContext(TrackContext)
-  const {
-    currentTrack,
-    setCurrentTrack,
-    isMuted,
-    setIsMuted,
-    setAudioPlayer,
-    audioUrl,
-    setAudioUrl,
-  } = useContext(GlobalTrackContext)
+
   const router = useRouter()
 
   const handleDownload = () => {
@@ -37,9 +28,9 @@ const TrackIcons = () => {
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this track?')) return
 
-    const deletedTrackData = await deleteTrack(track.id)
-    console.log('deletedTrackData', deletedTrackData)
-    deletedTrackData && router.reload()
+    const deletedSuccessfully = await deleteTrack(track)
+    console.log('delete successfull? ', deletedSuccessfully)
+    deletedSuccessfully && router.reload()
   }
 
   return (
