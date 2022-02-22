@@ -1,11 +1,14 @@
 import Link from 'next/link'
+
+import HeaderContainer from '@components/layout/header/HeaderContainer'
 import Logo from '@components/layout/Logo'
 import { useAuth } from '@lib/hooks/useAuth'
 
 const Header = () => {
   const { session, signOut } = useAuth()
+
   return (
-    <header className="flex flex-row items-center w-screen max-w-6xl justify-around py-4 absolute z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
+    <HeaderContainer>
       <Logo />
       {session ? (
         <div className="flex flex-row items-center space-x-4">
@@ -28,7 +31,7 @@ const Header = () => {
           </span>
         </Link>
       )}
-    </header>
+    </HeaderContainer>
   )
 }
 
