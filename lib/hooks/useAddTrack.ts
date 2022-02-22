@@ -3,87 +3,92 @@ import { useState } from 'react'
 
 import { useAuth } from '@lib/hooks/useAuth'
 import { supabase } from '@lib/supabase'
+import { extractFile } from '@lib/extractFile'
 
 const useAddTrack = () => {
   const { user } = useAuth()
   const router = useRouter()
 
+  // track state
   const [title, setTitle] = useState('')
-  const [artworkUrl, setArtworkUrl] = useState(null)
-  const [artworkPreview, setArtworkPreview] = useState(null)
-  const [audioUrl, setAudioUrl] = useState(null)
-  const [audioPreview, setAudioPreview] = useState(null)
-  const [uploadingArtwork, setUploadingArtwork] = useState(false)
-  const [uploadingAudio, setUploadingAudio] = useState(false)
   const [addingTrack, setAddingTrack] = useState(false)
 
-  const handleArtworkChange = async (e) => {
+  // track artwork state
+  const [artworkUrl, setArtworkUrl] = useState(null)
+  const [artworkPreview, setArtworkPreview] = useState(null)
+  const [artworkFile, setArtworkFile] = useState(null)
+  const [uploadingArtwork, setUploadingArtwork] = useState(false)
+
+  // track audio state
+  const [audioUrl, setAudioUrl] = useState(null)
+  const [audioPreview, setAudioPreview] = useState(null)
+  const [audioFile, setAudioFile] = useState(null)
+  const [uploadingAudio, setUploadingAudio] = useState(false)
+
+  // change artwork state when file is selected
+  const handleArtworkChange = async (evt) => {
     try {
-      setUploadingArtwork(true)
-
-      if (!e.target.files || e.target.files.length == 0) {
-        throw 'You must select an image to upload.'
-      }
-
-      const file = e.target.files[0]
-      setArtworkPreview(URL.createObjectURL(file))
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${user.id}-${Math.floor(
-        Math.random() * 10000
-      )}.${fileExt}`
-      const filePath = `${fileName}`
-      setArtworkUrl(filePath)
-
-      let { error: uploadError } = await supabase.storage
-        .from('artwork')
-        .upload(filePath, file)
-
-      if (uploadError) {
-        console.log('upload errorrrrr', uploadError)
-        throw uploadError
-      }
+      const { file, localUrl, fileName } = extractFile(evt, user)
+      // set artwork preview
+      setArtworkPreview(localUrl)
+      // set artwork url
+      setArtworkUrl(fileName)
+      // set artwork file
+      setArtworkFile(file)
     } catch (error) {
       console.log(error.message)
-    } finally {
-      setUploadingArtwork(false)
     }
   }
-  const handleAudioChange = async (e) => {
+
+  // change audio state when file is selected
+  const handleAudioChange = async (evt) => {
     try {
-      setUploadingAudio(true)
-
-      if (!e.target.files || e.target.files.length == 0) {
-        throw 'You must select an image to upload.'
-      }
-
-      const file = e.target.files[0]
-      setAudioPreview(URL.createObjectURL(file))
-
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${user.id}-${Math.floor(
-        Math.random() * 10000
-      )}.${fileExt}`
-      const filePath = `${fileName}`
-      setAudioUrl(filePath)
-
-      let { error: uploadError } = await supabase.storage
-        .from('audio')
-        .upload(filePath, file)
-
-      if (uploadError) {
-        console.log('upload errorrrrr', uploadError)
-        throw uploadError
-      }
+      const { file, localUrl, fileName } = extractFile(evt, user)
+      // set audio preview
+      setAudioPreview(localUrl)
+      // set audio url
+      setAudioUrl(fileName)
+      // set audio file
+      setAudioFile(file)
     } catch (error) {
       console.log(error.message)
-    } finally {
-      setUploadingAudio(false)
     }
   }
+
+  // upload artwork and audio to storage and add track to db
   const handleAddTrack = async () => {
     try {
+      // upload artwork
+      if (artworkFile) {
+        setUploadingArtwork(true)
+        const { error: uploadArtworkError } = await supabase.storage
+          .from('artwork')
+          .upload(artworkUrl, artworkFile)
+
+        if (uploadArtworkError) {
+          console.log('upload artwork error', uploadArtworkError)
+          throw uploadArtworkError
+        }
+        setUploadingArtwork(false)
+      }
+
+      // upload audio
+      if (audioFile) {
+        setUploadingAudio(true)
+        const { error: uploadAudioError } = await supabase.storage
+          .from('audio')
+          .upload(audioUrl, audioFile)
+
+        if (uploadAudioError) {
+          console.log('upload audio error', uploadAudioError)
+          throw uploadAudioError
+        }
+        setUploadingAudio(false)
+      }
+
+      // add track
       setAddingTrack(true)
-      let { error: uploadError } = await supabase.from('tracks').insert([
+      let { error: uploadTrackError } = await supabase.from('tracks').insert([
         {
           title,
           artwork_url: artworkUrl,
@@ -92,18 +97,13 @@ const useAddTrack = () => {
         },
       ])
 
-      if (uploadError) {
-        throw uploadError
+      if (uploadTrackError) {
+        throw uploadTrackError
       }
     } catch (error) {
       console.log(error.message)
     } finally {
-      setTitle('')
-      setArtworkUrl(null)
-      setArtworkPreview(null)
-      setAudioUrl(null)
-      setAudioPreview(null)
-      setAddingTrack(false)
+      // after adding track, redirect to profile page
       router.push('/profile')
     }
   }
