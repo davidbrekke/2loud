@@ -1,3 +1,5 @@
+import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
+
 import Layout from '@components/layout'
 import UserTracks from '@components/profile/UserTracks'
 import UserDetails from '@components/profile/UserDetails'
@@ -14,3 +16,7 @@ const Profile = () => {
 }
 
 export default Profile
+
+export const getServerSideProps = withAuthRequired({
+  redirectTo: '/signin',
+})

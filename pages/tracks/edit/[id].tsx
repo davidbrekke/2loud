@@ -1,10 +1,11 @@
 import Image from 'next/image'
+import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 
 import Layout from '@components/layout'
 import { useEditTrack } from '@lib/hooks/useEditTrack'
 import { getTrack } from '@lib/hooks/getTrack'
 
-const EditTrack = ({ pageProps: { track } }) => {
+const EditTrack = ({ track }) => {
   const {
     title,
     setTitle,
@@ -113,12 +114,15 @@ const EditTrack = ({ pageProps: { track } }) => {
 
 export default EditTrack
 
-export async function getServerSideProps({ params }) {
-  const { id } = params
-  const trackData = await getTrack(id)
-  return {
-    props: {
-      track: trackData[0],
-    },
-  }
-}
+export const getServerSideProps = withAuthRequired({
+  redirectTo: '/signin',
+  async getServerSideProps({ params }) {
+    const { id } = params
+    const trackData = await getTrack(id[0])
+    return {
+      props: {
+        track: trackData[0],
+      },
+    }
+  },
+})
