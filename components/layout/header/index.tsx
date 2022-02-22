@@ -22,7 +22,7 @@ const Header = () => {
           </button>
         </div>
       ) : (
-        <Link href="/signin">
+        <Link href="/signin" passHref>
           <span className="px-2 py-1 text-lg rounded-lg text-white bg-white bg-opacity-10 shadow-lg transition hover:shadow-xl cursor-pointer hover:bg-opacity-20 hover:scale-105">
             sign in
           </span>
