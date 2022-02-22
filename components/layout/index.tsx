@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
         <meta name="description" content="2loud" />
       </Head>
       <AppContainer>
-        <main className="max-w-6xl min-h-screen max-h-screen m-auto flex flex-col items-center justify-start relative">
+        <main className="max-w-6xl min-h-screen max-h-screen m-auto flex flex-col items-center">
           <Header />
           {children}
         </main>
