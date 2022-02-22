@@ -22,7 +22,6 @@ const useAuth = () => {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
       router.push('/')
-      alert('you are now signed out!')
     } catch (error) {
       console.log('Error thrown:', error.message)
       alert(error.error_description || error.message)
