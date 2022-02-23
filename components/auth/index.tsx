@@ -30,7 +30,7 @@ const Auth = () => {
             className="text-md text-gray-600 cursor-pointer"
             onClick={() => setEmailSent(false)}
           >
-            try again
+            send again
           </div>
         </div>
       ) : (
