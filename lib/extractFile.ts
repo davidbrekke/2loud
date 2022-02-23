@@ -1,4 +1,9 @@
-// get file from input event
+/**
+ * function to download audio from supabase as a local url
+ * @param    { Event } evt    file upload event from user
+ * @param    { User } user    user
+ * @return   { object }       url to the audio
+ */
 const extractFile = (evt, user) => {
   // if no file exists, throw error
   if (!evt.target.files || evt.target.files.length == 0) {

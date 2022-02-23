@@ -1,5 +1,10 @@
 import { supabase } from '@lib/supabase'
 
+/**
+ * function to download artwork from supabase as a local url
+ * @param    { string } path    path to the artwork in supabase
+ * @return   { URL }            url to the artwork
+ */
 const downloadArtworkAsUrl = async (path: string) => {
   try {
     const { data, error } = await supabase.storage
