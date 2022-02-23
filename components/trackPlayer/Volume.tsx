@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { VolumeUpIcon, VolumeOffIcon } from '@heroicons/react/outline'
 import { Icon } from '@components/icon'
-import { GlobalTrackContext } from '@lib/contexts/GlobalTrackContext'
+import { TrackPlayerContext } from '@lib/contexts/TrackPlayerContext'
 
 const Volume = () => {
-  const { isMuted, setIsMuted } = useContext(GlobalTrackContext)
+  const { isMuted, setIsMuted } = useContext(TrackPlayerContext)
 
   const toggleVolume = () => {
     const current = isMuted

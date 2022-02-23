@@ -11,11 +11,8 @@ const Auth = () => {
       setLoading(true)
       const { error, user } = await supabase.auth.signIn({ email })
       if (error) throw error
-      console.log('user: ', user)
-      alert('Check your email for the login link!')
     } catch (error) {
       console.log('Error thrown:', error.message)
-      alert(error.error_description || error.message)
     } finally {
       setLoading(false)
       setEmail('')
@@ -25,9 +22,17 @@ const Auth = () => {
   return (
     <div className="h-screen flex flex-col justify-center items-center space-y-4 text-gray-600">
       {emailSent ? (
-        <h1 className="text-2xl md:text-3xl font-bold">
-          🎉 check email for login link 🎉
-        </h1>
+        <div className="flex flex-col items-center justify center space-y-4">
+          <h1 className="text-2xl md:text-3xl font-bold">
+            🎉 check email for login link 🎉
+          </h1>
+          <div
+            className="text-md text-gray-600 cursor-pointer"
+            onClick={() => setEmailSent(false)}
+          >
+            send again
+          </div>
+        </div>
       ) : (
         <>
           <h1 className="text-2xl font-bold">

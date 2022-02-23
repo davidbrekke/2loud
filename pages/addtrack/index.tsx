@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 
 import Layout from '@components/layout'
 import { useAddTrack } from '@lib/hooks/useAddTrack'
@@ -111,3 +112,7 @@ const AddTrack = () => {
 }
 
 export default AddTrack
+
+export const getServerSideProps = withAuthRequired({
+  redirectTo: '/signin',
+})

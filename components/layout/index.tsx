@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Header from '@components/layout/header'
 import AppContainer from '@components/layout/AppContainer'
+import TrackPlayer from '@components/trackPlayer'
 
 const Layout = ({ children }) => {
   return (
@@ -11,9 +12,11 @@ const Layout = ({ children }) => {
         <meta name="description" content="2loud" />
       </Head>
       <AppContainer>
-        <main className="max-w-6xl min-h-screen max-h-screen m-auto flex flex-col items-center justify-start relative">
-          <Header />
-          {children}
+        <main className="max-w-6xl min-h-screen max-h-screen m-auto flex flex-col items-center">
+          <TrackPlayer>
+            <Header />
+            {children}
+          </TrackPlayer>
         </main>
       </AppContainer>
     </>
