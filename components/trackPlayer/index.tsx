@@ -1,58 +1,59 @@
-import { useRef, useContext, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 import Volume from '@components/trackPlayer/Volume'
 import PlayPause from '@components/trackPlayer/PlayPause'
-import { GlobalTrackContext } from '@lib/contexts/GlobalTrackContext'
+import { TrackPlayerContext } from '@lib/contexts/TrackPlayerContext'
 import { downloadAudioAsUrl } from '@lib/downloadAudio'
 
-const TrackPlayer = () => {
-  const {
-    currentTrack,
-    isPlaying,
-    setIsPlaying,
-    setAudioPlayer,
-    audioUrl,
-    setAudioUrl,
-  } = useContext(GlobalTrackContext)
+const TrackPlayer = ({ children }) => {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
+  const [currentTrack, setCurrentTrack] = useState(null)
+  const [audioUrl, setAudioUrl] = useState(null)
 
-  const audioPlayerRef = useRef()
-  const progressBarRef = useRef()
+  const audioPlayer = useRef()
+  const progressBar = useRef()
 
-  const download = async () => await downloadAudioAsUrl(currentTrack?.audio_url)
+  const download = async () =>
+    (await currentTrack) && downloadAudioAsUrl(currentTrack?.audio_url)
   useEffect(() => {
-    setAudioPlayer(audioPlayerRef.current)
     const url = download()
     currentTrack && setAudioUrl(url)
   }, [currentTrack])
 
+  const TrackPlayerProviderValue = {
+    currentTrack,
+    setCurrentTrack,
+    isPlaying,
+    setIsPlaying,
+    isMuted,
+    setIsMuted,
+    audioPlayer,
+    progressBar,
+    audioUrl,
+    setAudioUrl,
+  }
+
   return (
-    currentTrack && (
-      <div className="flex flex-row items-center w-full max-w-6xl justify-around p-2 absolute z-10 bottom-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
-        <audio src={audioUrl} ref={audioPlayerRef} loop />
+    <TrackPlayerContext.Provider value={TrackPlayerProviderValue}>
+      <div className="flex flex-row items-center w-full max-w-6xl justify-around px-2 py-6 absolute z-10 bottom-0 backdrop-filter backdrop-blur-lg bg-opacity-30">
+        <audio src={audioUrl} ref={audioPlayer} loop preload="metadata" />
         <PlayPause
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
-          audioPlayerRef={audioPlayerRef}
+          audioPlayerRef={audioPlayer}
         />
-        <div className="flex flex-col space-y-1 items-center">
-          <h2 className="text-xl md:text-2xl text-gray-600 font-bold truncate">
-            {currentTrack.title}
-          </h2>
-          <input
-            type="range"
-            className="w-52 md:w-72"
-            defaultValue="0"
-            ref={progressBarRef}
-            // onChange={changeRange}
-          />
-          <div className="flex flex-row px-6 justify-between items-center w-full text-md md:text-lg text-gray-600">
-            <span>00:00</span>
-            <span>00:00</span>
-          </div>
-        </div>
+        <h2 className="text-xl md:text-2xl text-gray-600 font-bold truncate">
+          {currentTrack ? (
+            currentTrack.title
+          ) : (
+            <span className="text-gray-500 font-normal">select a track</span>
+          )}
+        </h2>
         <Volume />
       </div>
-    )
+      {children}
+    </TrackPlayerContext.Provider>
   )
 }
 

@@ -14,7 +14,7 @@ const UserTracks = () => {
           <Link href="/addtrack">add track</Link>
         </div>
       </div>
-      <div className="p-4 flex flex-col space-y-4">
+      <div className="pt-4 pb-28 flex flex-col space-y-4">
         {tracks.length > 0 ? (
           tracks.map((track) => <Track key={track.id} track={track} />)
         ) : (

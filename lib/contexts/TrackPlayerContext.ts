@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-export const GlobalTrackContext = createContext({
+export const TrackPlayerContext = createContext({
   currentTrack: null,
   setCurrentTrack: null,
   isPlaying: false,
@@ -8,9 +8,7 @@ export const GlobalTrackContext = createContext({
   isMuted: false,
   setIsMuted: null,
   audioPlayer: null,
-  setAudioPlayer: null,
   progressBar: null,
-  setProgressBar: null,
   audioUrl: null,
   setAudioUrl: null,
 })
