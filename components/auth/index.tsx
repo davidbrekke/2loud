@@ -11,10 +11,8 @@ const Auth = () => {
       setLoading(true)
       const { error, user } = await supabase.auth.signIn({ email })
       if (error) throw error
-      console.log('user: ', user)
     } catch (error) {
       console.log('Error thrown:', error.message)
-      alert(error.error_description || error.message)
     } finally {
       setLoading(false)
       setEmail('')
