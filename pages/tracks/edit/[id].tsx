@@ -19,9 +19,14 @@ const EditTrack = ({ track }) => {
     handleArtworkChange,
     handleAudioChange,
     handleUpdateTrack,
+    setNewTitle,
+    newTitle,
+    newArtwork,
+    newAudio,
   } = useEditTrack(track)
 
   const isFormComplete = title && audioUrl && artworkUrl
+  const isFormEdited = newTitle || newArtwork || newAudio
 
   return (
     <Layout>
@@ -43,7 +48,10 @@ const EditTrack = ({ track }) => {
                   name="title"
                   className="rounded-md text-xl outline-none bg-white bg-opacity-30 py-2 px-4 shadow-lg transition focus:shadow-2xl"
                   placeholder="title..."
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => {
+                    setTitle(e.target.value)
+                    !newTitle && setNewTitle(true)
+                  }}
                 />
               </div>
               {/* FILES */}
@@ -92,7 +100,7 @@ const EditTrack = ({ track }) => {
               </div>
 
               {/* SUBMIT */}
-              {isFormComplete ? (
+              {isFormEdited && isFormComplete ? (
                 <div
                   onClick={handleUpdateTrack}
                   className="px-4 py-2 rounded-lg text-gray-100 shadow-lg transition text-lg hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 via-indigo-400 to-indigo-500"
@@ -118,11 +126,9 @@ export const getServerSideProps = withAuthRequired({
   redirectTo: '/signin',
   async getServerSideProps({ params }) {
     const { id } = params
-    const trackData = await getTrack(id[0])
-    return {
-      props: {
-        track: trackData[0],
-      },
+    if (typeof id === 'string') {
+      const trackData = await getTrack(id)
+      return { props: { track: trackData[0] } }
     }
   },
 })
