@@ -15,7 +15,7 @@ const NoAvatar = () => {
   const { user } = useAuth()
   const router = useRouter()
 
-  const avatarRef = useRef()
+  const avatarRef = useRef<HTMLInputElement>(null)
 
   return previewAvatarUrl ? (
     <div className="relative">
@@ -58,7 +58,10 @@ const NoAvatar = () => {
   ) : (
     <div
       className="flex flex-row items-center justify-center shadow-xl w-24 h-24 rounded-lg m-auto bg-white bg-opacity-30 transition hover:shadow-2xl cursor-pointer"
-      onClick={() => avatarRef && avatarRef.current.click()}
+      onClick={() => {
+        const avatar = avatarRef.current
+        avatar?.click()
+      }}
     >
       <input
         type="file"
