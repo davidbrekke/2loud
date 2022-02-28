@@ -2,10 +2,6 @@ import { downloadAvatarAsUrl } from '@lib/downloadAvatar'
 import { useEffect, useState } from 'react'
 
 const Avatar = ({ url, size }: { url: string; size: 'sm' | 'md' | 'lg' }) => {
-  // check if url is valid
-  if (typeof url !== 'string') {
-    return <span>invalid url</span>
-  }
   const [avatarUrl, setAvatarUrl] = useState('')
 
   useEffect(() => {
@@ -15,6 +11,11 @@ const Avatar = ({ url, size }: { url: string; size: 'sm' | 'md' | 'lg' }) => {
       setAvatarUrl(localUrl)
     })()
   }, [])
+
+  // check if url is valid
+  if (typeof url !== 'string') {
+    return <span>invalid url</span>
+  }
 
   const sizeMap = {
     sm: 'w-8 h-8',
