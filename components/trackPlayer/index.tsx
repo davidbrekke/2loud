@@ -47,7 +47,7 @@ const TrackPlayer = ({ children }) => {
           {currentTrack ? (
             currentTrack.title
           ) : (
-            <span className="text-gray-500 font-normal">select a track</span>
+            <span className="text-gray-500 font-normal"></span>
           )}
         </h2>
         <Volume />
