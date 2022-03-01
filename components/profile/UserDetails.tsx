@@ -1,4 +1,5 @@
 import NoAvatar from './NoAvatar'
+import Username from './Username'
 import { Avatar } from '@components/avatar'
 
 const UserDetails = ({ profile }) => {
@@ -7,9 +8,7 @@ const UserDetails = ({ profile }) => {
       {/* if user already have a avatar set, display it */}
       {profile.avatar_url ? <Avatar url={profile.avatar_url} /> : <NoAvatar />}
       <div className="flex flex-col items-center md:items-start">
-        <h2 className=" text-2xl md:text-3xl transition font-bold text-gray-700 truncate">
-          {profile.username || ''}
-        </h2>
+        <Username profile={profile} />
         <h2 className="text-md md:text-lg font-bold text-gray-600 truncate">
           {profile.email}
         </h2>
