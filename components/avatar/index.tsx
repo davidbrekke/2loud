@@ -1,7 +1,9 @@
+import { UserCircleIcon } from '@heroicons/react/outline'
+import Image from 'next/image'
 import { downloadAvatarAsUrl } from '@lib/downloadAvatar'
 import { useEffect, useState } from 'react'
 
-const Avatar = ({ url, size }: { url: string; size: 'sm' | 'md' | 'lg' }) => {
+const Avatar = ({ url }: { url: string }) => {
   const [avatarUrl, setAvatarUrl] = useState('')
 
   useEffect(() => {
@@ -17,17 +19,15 @@ const Avatar = ({ url, size }: { url: string; size: 'sm' | 'md' | 'lg' }) => {
     return <span>invalid url</span>
   }
 
-  const sizeMap = {
-    sm: 'w-8 h-8',
-    md: 'w-12 h-12',
-    lg: 'w-16 h-16',
-  }
-
   return (
     <div
-      className={`flex flex-row items-center justify-center ${sizeMap[size]}`}
+      className={`flex flex-row items-center justify-center overflow-hidden rounded-lg w-24 h-24 shadow-xl`}
     >
-      <img src={avatarUrl} alt="avatar" />
+      {avatarUrl ? (
+        <Image src={avatarUrl} alt="avatar" width={100} height={100} />
+      ) : (
+        <UserCircleIcon className="text-white w-16 drop-shadow-xl" />
+      )}
     </div>
   )
 }

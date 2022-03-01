@@ -5,11 +5,7 @@ const UserDetails = ({ profile }) => {
   return (
     <div className="flex flex-col space-y-4 transition md:flex-row md:space-y-0 md:space-x-4 items-center">
       {/* if user already have a avatar set, display it */}
-      {profile.avatar_url ? (
-        <Avatar url={profile.avatar_url} size="lg" />
-      ) : (
-        <NoAvatar />
-      )}
+      {profile.avatar_url ? <Avatar url={profile.avatar_url} /> : <NoAvatar />}
       <div className="flex flex-col items-center md:items-start">
         <h2 className=" text-2xl md:text-3xl transition font-bold text-gray-700 truncate">
           {profile.username || ''}
