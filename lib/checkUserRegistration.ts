@@ -11,15 +11,17 @@ const checkUserRegistration = async (user) => {
       console.log(error)
     }
     if (!data) {
-      return {
+      const userRegistration = {
         registered: false,
         userProfile: null,
       }
+      return userRegistration
     }
-    return {
+    const userRegistration = {
       registered: true,
       userProfile: data[0],
     }
+    return userRegistration
   } catch (error) {
     console.log(error)
   }
