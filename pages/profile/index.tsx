@@ -1,5 +1,6 @@
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 import Layout from '@components/layout'
 import UserTracks from '@components/profile/UserTracks'
@@ -11,10 +12,15 @@ import { checkUserRegistration } from '@lib/checkUserRegistration'
 const Profile = () => {
   const [profile, setProfile] = useState(null)
   const { user } = useAuth()
+  const router = useRouter()
 
   useEffect(() => {
     ;(async () => {
       if (profile) return
+      if (!user) {
+        router.push('/signin')
+        return
+      }
       const { registered, userProfile } = await checkUserRegistration(user)
       if (!registered) {
         const { data: insertData, error: insertError } = await supabase
