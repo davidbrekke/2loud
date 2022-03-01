@@ -10,7 +10,8 @@ const checkUserRegistration = async (user) => {
     if (error) {
       console.log(error)
     }
-    if (!data) {
+    console.log(data)
+    if (!data.length) {
       const userRegistration = {
         registered: false,
         userProfile: null,
