@@ -1,6 +1,6 @@
 const HeaderContainer = ({ children }) => {
   return (
-    <header className="absolute z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30 shadow-2xl w-screen py-4">
+    <header className="absolute z-10 top-0 backdrop-filter backdrop-blur-lg bg-opacity-30 w-screen py-4">
       <div className="flex flex-row items-center max-w-6xl justify-around m-auto">
         {children}
       </div>

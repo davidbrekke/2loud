@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import { supabase } from '@lib/supabase'
 
+// TODO: add 'sent to' when emailSent is true
+
 const Auth = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
+  const [sentTo, setSentTo] = useState<string>('')
   const [emailSent, setEmailSent] = useState<boolean>(false)
 
   const sendMagicLink = async (email: string) => {
     try {
       setLoading(true)
-      const { error, user } = await supabase.auth.signIn({ email })
+      setSentTo(email)
+      const { error } = await supabase.auth.signIn({ email })
       if (error) throw error
     } catch (error) {
       console.log('Error thrown:', error.message)
@@ -23,6 +27,7 @@ const Auth = () => {
     <div className="h-screen flex flex-col justify-center items-center space-y-4 text-gray-600">
       {emailSent ? (
         <div className="flex flex-col items-center justify center space-y-4">
+          <h2 className="text-md text-gray-600">sent to {sentTo}</h2>
           <h1 className="text-2xl md:text-3xl font-bold">
             🎉 check email for login link 🎉
           </h1>

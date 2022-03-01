@@ -16,10 +16,10 @@ const TrackContainer = ({ children }) => {
 
   return (
     <div
-      className={`flex flex-row cursor-pointer items-center justify-between p-4 md:p-8 space-x-2 rounded-3xl transition hover:scale-105 ${
+      className={`flex flex-row cursor-pointer items-center justify-between p-4 md:p-8 space-x-2 rounded-3xl transition ${
         currentTrack === track
-          ? 'bg-white bg-opacity-40 shadow-xl hover:shadow-2xl'
-          : 'bg-white bg-opacity-20 hover:bg-opacity-30 shadow-lg hover:shadow-xl'
+          ? 'bg-white bg-opacity-50 shadow-2xl scale-105'
+          : 'bg-white bg-opacity-20 hover:bg-opacity-30 shadow-lg hover:shadow-xl hover:scale-105'
       }`}
       onClick={async () => {
         const sameTrack = currentTrack === track
