@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { supabase } from '@lib/supabase'
 
+// TODO: add 'sent to' when emailSent is true
+
 const Auth = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
