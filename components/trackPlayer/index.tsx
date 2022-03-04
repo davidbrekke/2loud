@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { MusicNoteIcon, XCircleIcon } from '@heroicons/react/solid'
+import { MusicNoteIcon, ChevronDownIcon } from '@heroicons/react/solid'
 
 import PlayPause from '@components/trackPlayer/PlayPause'
 import { TrackPlayerContext } from '@lib/contexts/TrackPlayerContext'
@@ -68,7 +68,7 @@ const TrackPlayer = ({ children }) => {
         >
           <div className="absolute -right-6 bottom-0  md:-left-6">
             <Icon
-              icon={<XCircleIcon />}
+              icon={<ChevronDownIcon />}
               size="sm"
               color="white"
               onClick={() => setDisplayPlayer(false)}
@@ -95,7 +95,7 @@ const TrackPlayer = ({ children }) => {
             </h3>
           </div>
         </div>
-        {!displayPlayer && (
+        {!displayPlayer && currentTrack && (
           <div
             className="flex flex-row items-center justify-center transition cursor-pointer hover:scale-105 hover:opacity-70 hover:bg-opacity-40 p-4 rounded-full absolute z-10 bottom-5 left-5 opacity-60 bg-white bg-opacity-30"
             onClick={() => setDisplayPlayer(true)}
