@@ -35,6 +35,7 @@ const NoAvatar = () => {
               .upload(avatarFileName, avatarFile)
             if (uploadAvatarError) {
               console.error(uploadAvatarError)
+              return
             }
             const { error: updadeAvatarError } = await supabase
               .from('profiles')
