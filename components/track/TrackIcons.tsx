@@ -22,7 +22,7 @@ const TrackIcons = () => {
       alert('must be logged in to download!')
       return
     }
-    downloadTrack()
+    downloadTrack(track.audio_url)
   }
 
   const handleDelete = async () => {
