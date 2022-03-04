@@ -5,10 +5,11 @@ import { useAuth } from '@lib/hooks/useAuth'
 
 const UserDetails = ({ profile }) => {
   const { user } = useAuth()
+
   return profile.id === user?.id ? (
     <div className="flex flex-col space-y-4 transition md:flex-row md:space-y-0 md:space-x-4 items-center">
       {/* if user already have a avatar set, display it */}
-      {profile.avatar_url ? <Avatar url={profile.avatar_url} /> : <NoAvatar />}
+      {profile.avatar_url ? <Avatar url={profile?.avatar_url} /> : <NoAvatar />}
       <div className="flex flex-col items-center md:items-start">
         <Username profile={profile} />
         <h2 className="text-md md:text-lg font-bold text-gray-600 truncate">

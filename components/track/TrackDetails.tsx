@@ -25,16 +25,16 @@ const TrackDetails = () => {
     })()
   }, [])
 
+  const handleUsernameClick = () => router.push(`/${username}`)
+
   return (
     <div className="flex flex-col space-y-2 w-36 md:w-72">
       <h2 className="text-xl font-bold text-gray-700">{title}</h2>
       <h3 className="text-lg text-gray-600">
         <span className="text-gray-500">@</span>
         <span
-          onClick={() => {
-            router.push(`/${username}`)
-          }}
-          className="hover:text-indigo-600 hover:font-semibold"
+          onClick={handleUsernameClick}
+          className="hover:text-sky-500 hover:font-semibold"
         >
           {username}
         </span>
