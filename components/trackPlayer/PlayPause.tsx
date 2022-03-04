@@ -17,14 +17,14 @@ const PlayPause = ({ isPlaying, setIsPlaying, audioPlayerRef }) => {
     <Icon
       icon={<PauseIcon />}
       onClick={handleClickPauseIcon}
-      size="lg"
+      size="xl"
       color="white"
     />
   ) : (
     <Icon
       icon={<PlayIcon />}
       onClick={handleClickPlayIcon}
-      size="lg"
+      size="xl"
       color="white"
     />
   )

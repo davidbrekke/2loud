@@ -49,7 +49,7 @@ const Profile = () => {
       <Layout>
         <div className="w-screen flex flex-col items-center pt-32">
           <UserDetails profile={profile} />
-          <UserTracks />
+          <UserTracks profile={profile} />
         </div>
       </Layout>
     )

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 
 import { supabase } from '@lib/supabase'
 import { checkUsername } from '@lib/checkUsername'
+import { useAuth } from '@lib/hooks/useAuth'
 
 const Username = ({ profile }) => {
   const [newUsername, setNewUsername] = useState(profile.username || '')
@@ -11,6 +12,7 @@ const Username = ({ profile }) => {
   const [loading, setLoading] = useState(false)
 
   const router = useRouter()
+  const { user } = useAuth()
 
   const { username } = profile
 

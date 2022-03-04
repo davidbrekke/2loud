@@ -9,15 +9,9 @@ const Avatar = ({ url }: { url: string }) => {
   useEffect(() => {
     ;(async () => {
       const localUrl = await downloadAvatarAsUrl(url)
-      console.log(localUrl)
       setAvatarUrl(localUrl)
     })()
   }, [])
-
-  // check if url is valid
-  if (typeof url !== 'string') {
-    return <span>invalid url</span>
-  }
 
   return (
     <div
