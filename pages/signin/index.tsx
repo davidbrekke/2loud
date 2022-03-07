@@ -4,13 +4,17 @@ import Layout from '@components/layout'
 
 const SignIn = () => (
   <Layout>
-    <div className="h-screen flex flex-col justify-center">
-      <details>
-        <summary>sign in with email</summary>
+    <div className="h-screen flex flex-col items-center justify-center gap-6 w-80 md:w-auto">
+      <details className="bg-white bg-opacity-10 p-4 rounded-xl shadow-lg">
+        <summary className="cursor-pointer text-lg text-gray-600 text-center">
+          sign in with email
+        </summary>
         <EmailAuth />
       </details>
-      <details>
-        <summary>sign in with ethereum</summary>
+      <details className="bg-white bg-opacity-10 p-4 rounded-xl shadow-lg">
+        <summary className="cursor-pointer text-lg text-gray-600 text-center">
+          sign in with ethereum
+        </summary>
         <EthereumAuth />
       </details>
     </div>

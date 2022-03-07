@@ -14,21 +14,21 @@ const EmailAuth = () => {
   return (
     <>
       {emailSent ? (
-        <div className="flex flex-col items-center justify center space-y-4">
-          <h2 className="text-md text-gray-600">sent to {sentTo}</h2>
+        <div className="flex flex-col items-center justify center gap-2 p-2">
+          <h2 className="text-md text-gray-700 font-bold">sent to {sentTo}</h2>
           <h1 className="text-2xl md:text-3xl font-bold">
             🎉 check email for login link 🎉
           </h1>
           <div
-            className="text-md text-gray-600 cursor-pointer"
+            className="text-md text-gray-600 cursor-pointer transition hover:font-bold"
             onClick={handleSendAgain}
           >
             send again
           </div>
         </div>
       ) : (
-        <>
-          <h1 className="text-2xl font-bold">
+        <div className="flex flex-col gap-4 p-2">
+          <h1 className="text-2xl font-bold text-center">
             enter email to receive login link
           </h1>
           <div className="flex flex-col text-gray-500">
@@ -51,7 +51,7 @@ const EmailAuth = () => {
           >
             {loading ? <span>sending...</span> : <span>Send magic link</span>}
           </button>
-        </>
+        </div>
       )}
     </>
   )
