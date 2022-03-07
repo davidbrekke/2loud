@@ -6,13 +6,13 @@ const SignIn = () => (
   <Layout>
     <div className="h-screen flex flex-col items-center justify-center gap-6 w-80 md:w-auto">
       <details className="bg-white bg-opacity-10 p-4 rounded-xl shadow-lg">
-        <summary className="cursor-pointer text-lg text-gray-600 text-center">
+        <summary className="cursor-pointer text-lg text-gray-600 text-center outline-none">
           sign in with email
         </summary>
         <EmailAuth />
       </details>
       <details className="bg-white bg-opacity-10 p-4 rounded-xl shadow-lg">
-        <summary className="cursor-pointer text-lg text-gray-600 text-center">
+        <summary className="cursor-pointer text-lg text-gray-600 text-center outline-none">
           sign in with ethereum
         </summary>
         <EthereumAuth />
