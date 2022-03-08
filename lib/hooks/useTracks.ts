@@ -1,30 +1,25 @@
-import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
 
 import { supabase } from '@lib/supabase'
 
 const useTracks = () => {
-  const [tracks, setTracks] = useState([])
-
   const fetchTracks = async () => {
     try {
-      let { data: tracksData, error: tracksError } = await supabase
+      const { data: tracksData, error: tracksError } = await supabase
         .from('tracks')
         .select('*')
 
       if (tracksError) {
+        console.error(tracksError)
         throw tracksError
       }
-      setTracks(tracksData)
+      return tracksData
     } catch (error) {
       console.error(error)
     }
   }
 
-  useEffect(() => {
-    fetchTracks()
-  }, [])
-
-  return tracks
+  return useQuery(['tracks'], fetchTracks)
 }
 
 export { useTracks }
