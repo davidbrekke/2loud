@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
+import { useMutation, useQueryClient } from 'react-query'
 
 import { useAuth } from '@lib/hooks/useAuth'
 import { supabase } from '@lib/supabase'
@@ -8,22 +9,20 @@ import { extractFile } from '@lib/extractFile'
 const useAddTrack = () => {
   const { user } = useAuth()
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   // track state
   const [title, setTitle] = useState('')
-  const [addingTrack, setAddingTrack] = useState(false)
 
   // track artwork state
   const [artworkUrl, setArtworkUrl] = useState(null)
   const [artworkPreview, setArtworkPreview] = useState(null)
   const [artworkFile, setArtworkFile] = useState(null)
-  const [uploadingArtwork, setUploadingArtwork] = useState(false)
 
   // track audio state
   const [audioUrl, setAudioUrl] = useState(null)
   const [audioPreview, setAudioPreview] = useState(null)
   const [audioFile, setAudioFile] = useState(null)
-  const [uploadingAudio, setUploadingAudio] = useState(false)
 
   // change artwork state when file is selected
   const handleArtworkChange = async (evt: ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +59,6 @@ const useAddTrack = () => {
     try {
       // upload artwork
       if (artworkFile) {
-        setUploadingArtwork(true)
         const { error: uploadArtworkError } = await supabase.storage
           .from('artwork')
           .upload(artworkUrl, artworkFile)
@@ -69,12 +67,10 @@ const useAddTrack = () => {
           console.log('upload artwork error', uploadArtworkError)
           throw uploadArtworkError
         }
-        setUploadingArtwork(false)
       }
 
       // upload audio
       if (audioFile) {
-        setUploadingAudio(true)
         const { error: uploadAudioError } = await supabase.storage
           .from('audio')
           .upload(audioUrl, audioFile)
@@ -83,30 +79,40 @@ const useAddTrack = () => {
           console.log('upload audio error', uploadAudioError)
           throw uploadAudioError
         }
-        setUploadingAudio(false)
       }
 
       // add track
-      setAddingTrack(true)
-      let { error: uploadTrackError } = await supabase.from('tracks').insert([
-        {
-          title,
-          artwork_url: artworkUrl,
-          audio_url: audioUrl,
-          artist_id: user.id,
-        },
-      ])
+      const { data: uploadTrackData, error: uploadTrackError } = await supabase
+        .from('tracks')
+        .insert([
+          {
+            title,
+            artwork_url: artworkUrl,
+            audio_url: audioUrl,
+            artist_id: user.id,
+          },
+        ])
 
       if (uploadTrackError) {
         throw uploadTrackError
       }
+      return uploadTrackData
     } catch (error) {
       console.log(error.message)
-    } finally {
-      // after adding track, redirect to profile page
-      router.push('/profile')
     }
   }
+
+  const {
+    mutateAsync: addTrack,
+    isLoading,
+    isError,
+    error,
+  } = useMutation(handleAddTrack, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['tracks'])
+      router.push(`/profile`)
+    },
+  })
 
   return {
     title,
@@ -115,12 +121,12 @@ const useAddTrack = () => {
     artworkPreview,
     audioUrl,
     audioPreview,
-    uploadingArtwork,
-    uploadingAudio,
-    addingTrack,
     handleArtworkChange,
     handleAudioChange,
-    handleAddTrack,
+    addTrack,
+    isLoading,
+    isError,
+    error,
   }
 }
 
