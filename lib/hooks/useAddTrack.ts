@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { useAuth } from '@lib/hooks/useAuth'
 import { supabase } from '@lib/supabase'
@@ -26,7 +26,7 @@ const useAddTrack = () => {
   const [uploadingAudio, setUploadingAudio] = useState(false)
 
   // change artwork state when file is selected
-  const handleArtworkChange = async (evt) => {
+  const handleArtworkChange = async (evt: ChangeEvent<HTMLInputElement>) => {
     try {
       const { file, localUrl, fileName } = extractFile(evt, user)
       // set artwork preview
@@ -41,7 +41,7 @@ const useAddTrack = () => {
   }
 
   // change audio state when file is selected
-  const handleAudioChange = async (evt) => {
+  const handleAudioChange = async (evt: ChangeEvent<HTMLInputElement>) => {
     try {
       const { file, localUrl, fileName } = extractFile(evt, user)
       // set audio preview
