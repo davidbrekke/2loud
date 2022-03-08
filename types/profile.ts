@@ -3,8 +3,8 @@ interface Profile {
   username: string | null
   email: string
   avatarUrl: string | null
-  created_at: Date
-  updated_at: Date | null
+  created_at: string
+  updated_at: string | null
 }
 
 export type { Profile }

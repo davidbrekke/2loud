@@ -4,8 +4,8 @@ interface Track {
   artwork_url: string | null
   audio_url: string
   artist_id: string
-  created_at: Date
-  updated_at: Date | null
+  created_at: string
+  updated_at: string | null
 }
 
 export type { Track }
