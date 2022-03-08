@@ -4,8 +4,9 @@ import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import Layout from '@components/layout'
 import { useEditTrack } from '@lib/hooks/useEditTrack'
 import { getTrack } from '@lib/hooks/getTrack'
+import { Track } from 'types/track'
 
-const EditTrack = ({ track }) => {
+const EditTrack = ({ track }: { track: Track }) => {
   const {
     title,
     setTitle,
@@ -13,16 +14,16 @@ const EditTrack = ({ track }) => {
     artworkPreview,
     audioUrl,
     audioPreview,
-    uploadingArtwork,
-    uploadingAudio,
-    updatingTrack,
     handleArtworkChange,
     handleAudioChange,
-    handleUpdateTrack,
     setNewTitle,
     newTitle,
     newArtwork,
     newAudio,
+    updateTrack,
+    isLoading,
+    isError,
+    error,
   } = useEditTrack(track)
 
   const isFormComplete = title && audioUrl && artworkUrl
@@ -31,8 +32,10 @@ const EditTrack = ({ track }) => {
   return (
     <Layout>
       <div className="h-screen flex flex-col justify-center items-center text-gray-700">
-        {updatingTrack ? (
+        {isLoading ? (
           <h1>updating track</h1>
+        ) : isError ? (
+          <h1>{error}</h1>
         ) : (
           <>
             <h1 className="text-3xl font-bold mb-4">edit track</h1>
@@ -80,7 +83,6 @@ const EditTrack = ({ track }) => {
                       preview
                     </div>
                   )}
-                  {uploadingArtwork && <span>uploading</span>}
                 </div>
                 {/* AUDIO */}
                 <div className="flex flex-col items-center p-2">
@@ -95,14 +97,13 @@ const EditTrack = ({ track }) => {
                     className="text-gray-600 p-2"
                   />
                   {audioPreview && <audio controls src={audioPreview} />}
-                  {uploadingAudio && <span>uploading</span>}
                 </div>
               </div>
 
               {/* SUBMIT */}
               {isFormEdited && isFormComplete ? (
                 <div
-                  onClick={handleUpdateTrack}
+                  onClick={() => updateTrack()}
                   className="px-4 py-2 rounded-lg text-gray-100 shadow-lg transition text-lg hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 via-indigo-400 to-indigo-500"
                 >
                   update track
