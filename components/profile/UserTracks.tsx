@@ -1,40 +1,22 @@
 import Link from 'next/link'
 
-import { useUserTracks } from '@lib/hooks/useUserTracks'
+import { useTracksByUserId } from '@lib/hooks/useTracksByUserId'
 import Track from '@components/track'
 import { useAuth } from '@lib/hooks/useAuth'
-import { supabase } from '@lib/supabase'
-import { useEffect, useState } from 'react'
+
 const UserTracks = ({ profile }) => {
-  const [tracks, setTracks] = useState([])
-
-  const fetchUserTracks = async (id: string) => {
-    try {
-      let { data: tracksData, error: tracksError } = await supabase
-        .from('tracks')
-        .select('*')
-        .eq('artist_id', id)
-
-      if (tracksError) {
-        throw tracksError
-      }
-      setTracks(tracksData)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   const { user } = useAuth()
 
-  useEffect(() => {
-    if (profile) {
-      fetchUserTracks(profile.id)
-      return
-    }
-    if (user) {
-      fetchUserTracks(user.id)
-    }
-  }, [])
+  const {
+    data: tracks,
+    isLoading,
+    isError,
+    error,
+  } = useTracksByUserId(profile.id)
+
+  if (isLoading) return <p>Loading...</p>
+
+  if (isError) return <p>{error}</p>
 
   return (
     <>
