@@ -8,7 +8,7 @@ import { Icon } from '@components/icon'
 import FireTrack from '@components/track/FireTrack'
 import { downloadTrack } from '@lib/downloadTrack'
 import { useAuth } from '@lib/hooks/useAuth'
-import { deleteTrack } from '@lib/hooks/deleteTrack'
+import { useDeleteTrack } from '@lib/hooks/useDeleteTrack'
 import { TrackContext } from '@lib/contexts/TrackContext'
 
 const TrackIcons = () => {
@@ -25,13 +25,7 @@ const TrackIcons = () => {
     downloadTrack(track.audio_url)
   }
 
-  const handleDelete = async () => {
-    if (!confirm('Are you sure you want to delete this track?')) return
-
-    const deletedSuccessfully = await deleteTrack(track)
-    console.log('delete successfull? ', deletedSuccessfully)
-    deletedSuccessfully && router.reload()
-  }
+  const { mutateAsync: deleteTrack, isLoading: isDeleting } = useDeleteTrack()
 
   return (
     <div className="flex flex-row items-center">
@@ -54,12 +48,16 @@ const TrackIcons = () => {
               size="md"
               color="white"
             />
-            <Icon
-              icon={<TrashIcon />}
-              onClick={handleDelete}
-              size="md"
-              color="white"
-            />
+            {isDeleting ? (
+              <span>deleting</span>
+            ) : (
+              <Icon
+                icon={<TrashIcon />}
+                onClick={() => deleteTrack(track)}
+                size="md"
+                color="white"
+              />
+            )}
           </div>
         </>
       )}
