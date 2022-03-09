@@ -1,6 +1,6 @@
 import { supabase } from '@lib/supabase'
 
-const checkUsername = async (username: string) => {
+const checkUsername = async (username: string): Promise<boolean> => {
   try {
     let { data: usernameData, error: usernameError } = await supabase
       .from('profiles')

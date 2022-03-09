@@ -1,16 +1,17 @@
 import { useQuery } from 'react-query'
+
 import { supabase } from '@lib/supabase'
 import { Track } from '@lib/types/track'
 
-const useTracks = () => {
-  const fetchTracks = async (): Promise<Track[]> => {
+const useTracksByUserId = (id: string) => {
+  const fetchTracksByUserId = async (id: string): Promise<Track[]> => {
     try {
-      const { data: tracksData, error: tracksError } = await supabase
+      let { data: tracksData, error: tracksError } = await supabase
         .from('tracks')
         .select('*')
+        .eq('artist_id', id)
 
       if (tracksError) {
-        console.error(tracksError)
         throw tracksError
       }
       return tracksData
@@ -19,7 +20,7 @@ const useTracks = () => {
     }
   }
 
-  return useQuery(['tracks'], fetchTracks)
+  return useQuery(['tracks', id], () => fetchTracksByUserId(id))
 }
 
-export { useTracks }
+export { useTracksByUserId }

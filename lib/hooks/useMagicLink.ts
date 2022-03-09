@@ -2,13 +2,23 @@ import { SetStateAction, useState } from 'react'
 
 import { supabase } from '@lib/supabase'
 
-const useMagicLink = () => {
+interface UseMagicLinkReturn {
+  loading: boolean
+  sentTo: string
+  emailSent: boolean
+  email: string
+  handleSendAgain: () => void
+  handleEmailChange: (e: { target: { value: SetStateAction<string> } }) => void
+  handleSendMagicLink: (e: { preventDefault: () => void }) => void
+}
+
+const useMagicLink = (): UseMagicLinkReturn => {
   const [loading, setLoading] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
   const [sentTo, setSentTo] = useState<string>('')
   const [emailSent, setEmailSent] = useState<boolean>(false)
 
-  const sendMagicLink = async (email: string) => {
+  const sendMagicLink = async (email: string): Promise<void> => {
     try {
       setLoading(true)
       setSentTo(email)
@@ -22,13 +32,13 @@ const useMagicLink = () => {
     }
   }
 
-  const handleSendAgain = () => setEmailSent(false)
+  const handleSendAgain = (): void => setEmailSent(false)
 
   const handleEmailChange = (e: {
     target: { value: SetStateAction<string> }
-  }) => setEmail(e.target.value)
+  }): void => setEmail(e.target.value)
 
-  const handleSendMagicLink = (e: { preventDefault: () => void }) => {
+  const handleSendMagicLink = (e: { preventDefault: () => void }): void => {
     e.preventDefault()
     sendMagicLink(email)
     setEmailSent(true)

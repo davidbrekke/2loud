@@ -1,28 +1,19 @@
 import { supabase } from '@lib/supabase'
+import { Profile } from '@lib/types/profile'
 
-const checkUserRegistration = async (user) => {
+const checkUserRegistration = async (email: string): Promise<Profile> => {
   try {
-    const { id } = user
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
-      .eq('id', id)
+      .eq('email', email)
     if (error) {
       console.log(error)
     }
-    console.log(data)
-    if (!data.length) {
-      const userRegistration = {
-        registered: false,
-        userProfile: null,
-      }
-      return userRegistration
-    }
-    const userRegistration = {
-      registered: true,
-      userProfile: data[0],
-    }
-    return userRegistration
+    // return null if no profile found
+    if (!data.length) return null
+    // return profile if found
+    if (data.length) return data[0]
   } catch (error) {
     console.log(error)
   }
