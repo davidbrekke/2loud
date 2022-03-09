@@ -12,7 +12,7 @@ const UserTracks = ({ profile }) => {
     isLoading,
     isError,
     error,
-  } = useTracksByUserId(profile.id)
+  } = useTracksByUserId(profile?.id)
 
   if (isLoading) return <p>Loading...</p>
 
