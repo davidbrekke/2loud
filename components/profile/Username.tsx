@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 
 import { supabase } from '@lib/supabase'
 import { checkUsername } from '@lib/checkUsername'
-import { useAuth } from '@lib/hooks/useAuth'
 
 const Username = ({ profile }) => {
   const [newUsername, setNewUsername] = useState(profile.username || '')
@@ -12,13 +11,10 @@ const Username = ({ profile }) => {
   const [loading, setLoading] = useState(false)
 
   const router = useRouter()
-  const { user } = useAuth()
-
-  const { username } = profile
 
   const handleUsernameChange = async () => {
     if (loading) return
-    if (newUsername === username) {
+    if (newUsername === profile?.username) {
       toast.error('username must be different to change')
       return
     }
@@ -39,7 +35,7 @@ const Username = ({ profile }) => {
     const { error: usernameUpdateError } = await supabase
       .from('profiles')
       .upsert({
-        id: profile.id,
+        id: profile?.id,
         username: newUsername,
       })
     if (usernameUpdateError) {
@@ -47,17 +43,11 @@ const Username = ({ profile }) => {
       setLoading(false)
       return
     }
-    // await toast.promise(checkUsername(newUsername), {
-    //   loading: 'checking username...',
-    //   success: (isUsernameTaken) =>
-    //     isUsernameTaken ? 'username taken' : 'username available',
-    //   error: 'error checlking username',
-    // })
     setLoading(false)
     router.reload()
   }
 
-  return username ? (
+  return profile?.username ? (
     // if user already have a username set, display it
     <div className="flex flex-row items-center space-x-4">
       {isEditing ? (
@@ -87,7 +77,7 @@ const Username = ({ profile }) => {
       ) : (
         <>
           <h2 className="text-2xl md:text-3xl transition font-bold text-gray-700 truncate">
-            {username}
+            {profile?.username}
           </h2>
           <div
             className="text-gray-500 text-lg py-1/2 px-2 rounded hover:shadow-xl transition cursor-pointer hover:bg-white hover:bg-opacity-30"

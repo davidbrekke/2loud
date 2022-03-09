@@ -12,12 +12,11 @@ const AddTrack = () => {
     artworkPreview,
     audioUrl,
     audioPreview,
-    uploadingArtwork,
-    uploadingAudio,
-    addingTrack,
     handleArtworkChange,
     handleAudioChange,
-    handleAddTrack,
+    addTrack,
+    isLoading,
+    isError,
   } = useAddTrack()
 
   const isFormComplete = title && audioUrl && artworkUrl
@@ -25,8 +24,10 @@ const AddTrack = () => {
   return (
     <Layout>
       <div className="h-screen flex flex-col justify-center items-center text-gray-700">
-        {addingTrack ? (
+        {isLoading ? (
           <h1>adding track</h1>
+        ) : isError ? (
+          <h1>error :(</h1>
         ) : (
           <>
             <h1 className="text-3xl font-bold mb-4">add track</h1>
@@ -71,7 +72,6 @@ const AddTrack = () => {
                       preview
                     </div>
                   )}
-                  {uploadingArtwork && <span>uploading</span>}
                 </div>
                 {/* AUDIO */}
                 <div className="flex flex-col items-center p-2">
@@ -86,14 +86,13 @@ const AddTrack = () => {
                     className="text-gray-600 p-2"
                   />
                   {audioPreview && <audio controls src={audioPreview} />}
-                  {uploadingAudio && <span>uploading</span>}
                 </div>
               </div>
 
               {/* SUBMIT */}
               {isFormComplete ? (
                 <div
-                  onClick={handleAddTrack}
+                  onClick={() => addTrack()}
                   className="px-4 py-2 rounded-lg text-gray-100 shadow-lg transition text-lg hover:scale-105 hover:shadow-xl cursor-pointer bg-gradient-to-br from-teal-500 via-indigo-400 to-indigo-500"
                 >
                   add track
