@@ -4,7 +4,7 @@ import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import Layout from '@components/layout'
 import { useEditTrack } from '@lib/hooks/useEditTrack'
 import { getTrack } from '@lib/hooks/getTrack'
-import { Track } from 'types/track'
+import { Track } from '@lib/types/track'
 
 const EditTrack = ({ track }: { track: Track }) => {
   const {
@@ -23,7 +23,6 @@ const EditTrack = ({ track }: { track: Track }) => {
     updateTrack,
     isLoading,
     isError,
-    error,
   } = useEditTrack(track)
 
   const isFormComplete = title && audioUrl && artworkUrl
@@ -35,7 +34,7 @@ const EditTrack = ({ track }: { track: Track }) => {
         {isLoading ? (
           <h1>updating track</h1>
         ) : isError ? (
-          <h1>{error}</h1>
+          <h1>error :(</h1>
         ) : (
           <>
             <h1 className="text-3xl font-bold mb-4">edit track</h1>

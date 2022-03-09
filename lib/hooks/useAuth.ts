@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react'
-import { AuthSession } from '@supabase/supabase-js'
+import { AuthSession, User } from '@supabase/supabase-js'
 import { supabase } from '@lib/supabase'
 import { useRouter } from 'next/router'
 
-const useAuth = () => {
+interface UseAuthReturn {
+  session: AuthSession | null
+  signOut: () => void
+  user: User
+}
+
+const useAuth = (): UseAuthReturn => {
   const [session, setSession] = useState<AuthSession | null>(null)
   const router = useRouter()
 
@@ -17,7 +23,7 @@ const useAuth = () => {
     )
   }, [])
 
-  const signOut = async () => {
+  const signOut = async (): Promise<void> => {
     try {
       const { error } = await supabase.auth.signOut()
       if (error) throw error

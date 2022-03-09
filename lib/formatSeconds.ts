@@ -1,8 +1,4 @@
-/**
- * function to format seconds in 00:00 based on given seconds
- * @param    { number } secs    seconds
- * @return   { String }         formated time
- */
+// function to format seconds in 00:00 based on given seconds
 const formatSeconds = (secs: number): string => {
   const minutes = Math.floor(secs / 60)
   const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`

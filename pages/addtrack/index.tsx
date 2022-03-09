@@ -17,7 +17,6 @@ const AddTrack = () => {
     addTrack,
     isLoading,
     isError,
-    error,
   } = useAddTrack()
 
   const isFormComplete = title && audioUrl && artworkUrl
@@ -28,7 +27,7 @@ const AddTrack = () => {
         {isLoading ? (
           <h1>adding track</h1>
         ) : isError ? (
-          <h1>{error}</h1>
+          <h1>error :(</h1>
         ) : (
           <>
             <h1 className="text-3xl font-bold mb-4">add track</h1>

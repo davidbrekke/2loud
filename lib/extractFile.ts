@@ -1,10 +1,17 @@
-/**
- * function to download audio from supabase as a local url
- * @param    { Event } evt    file upload event from user
- * @param    { User } user    user
- * @return   { object }       url to the audio
- */
-const extractFile = (evt, user) => {
+import { User } from '@supabase/supabase-js'
+import { ChangeEvent } from 'react'
+
+interface ExtractFileReturn {
+  file: File
+  localUrl: string
+  fileName: string
+  fileExtension: string
+}
+
+const extractFile = (
+  evt: ChangeEvent<HTMLInputElement>,
+  user: User
+): ExtractFileReturn => {
   // if no file exists, throw error
   if (!evt.target.files || evt.target.files.length == 0) {
     throw 'You must select an image to upload.'

@@ -1,31 +1,48 @@
 import { useRouter } from 'next/router'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useState, SetStateAction, Dispatch } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 
 import { useAuth } from '@lib/hooks/useAuth'
 import { supabase } from '@lib/supabase'
 import { extractFile } from '@lib/extractFile'
+import { Track } from '@lib/types/track'
 
-const useAddTrack = () => {
+interface UseAddTrackReturn {
+  title: string
+  setTitle: Dispatch<SetStateAction<string>>
+  artworkUrl: string
+  artworkPreview: string
+  audioUrl: string
+  audioPreview: string
+  handleArtworkChange: (evt: ChangeEvent<HTMLInputElement>) => void
+  handleAudioChange: (evt: ChangeEvent<HTMLInputElement>) => void
+  addTrack: () => void
+  isLoading: boolean
+  isError: boolean
+}
+
+const useAddTrack = (): UseAddTrackReturn => {
   const { user } = useAuth()
   const router = useRouter()
   const queryClient = useQueryClient()
 
   // track state
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState<string>('')
 
   // track artwork state
-  const [artworkUrl, setArtworkUrl] = useState(null)
-  const [artworkPreview, setArtworkPreview] = useState(null)
-  const [artworkFile, setArtworkFile] = useState(null)
+  const [artworkUrl, setArtworkUrl] = useState<string | null>(null)
+  const [artworkPreview, setArtworkPreview] = useState<string | null>(null)
+  const [artworkFile, setArtworkFile] = useState<File | null>(null)
 
   // track audio state
-  const [audioUrl, setAudioUrl] = useState(null)
-  const [audioPreview, setAudioPreview] = useState(null)
-  const [audioFile, setAudioFile] = useState(null)
+  const [audioUrl, setAudioUrl] = useState<string | null>(null)
+  const [audioPreview, setAudioPreview] = useState<string | null>(null)
+  const [audioFile, setAudioFile] = useState<File | null>(null)
 
   // change artwork state when file is selected
-  const handleArtworkChange = async (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleArtworkChange = async (
+    evt: ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
     try {
       const { file, localUrl, fileName } = extractFile(evt, user)
       // set artwork preview
@@ -36,11 +53,14 @@ const useAddTrack = () => {
       setArtworkFile(file)
     } catch (error) {
       console.log(error.message)
+      throw error
     }
   }
 
   // change audio state when file is selected
-  const handleAudioChange = async (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleAudioChange = async (
+    evt: ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
     try {
       const { file, localUrl, fileName } = extractFile(evt, user)
       // set audio preview
@@ -51,22 +71,19 @@ const useAddTrack = () => {
       setAudioFile(file)
     } catch (error) {
       console.log(error.message)
+      throw error
     }
   }
 
   // upload artwork and audio to storage and add track to db
-  const handleAddTrack = async () => {
+  const handleAddTrack = async (): Promise<Track[]> => {
     try {
       // upload artwork
       if (artworkFile) {
         const { error: uploadArtworkError } = await supabase.storage
           .from('artwork')
           .upload(artworkUrl, artworkFile)
-
-        if (uploadArtworkError) {
-          console.log('upload artwork error', uploadArtworkError)
-          throw uploadArtworkError
-        }
+        if (uploadArtworkError) throw uploadArtworkError
       }
 
       // upload audio
@@ -74,11 +91,7 @@ const useAddTrack = () => {
         const { error: uploadAudioError } = await supabase.storage
           .from('audio')
           .upload(audioUrl, audioFile)
-
-        if (uploadAudioError) {
-          console.log('upload audio error', uploadAudioError)
-          throw uploadAudioError
-        }
+        if (uploadAudioError) throw uploadAudioError
       }
 
       // add track
@@ -92,21 +105,21 @@ const useAddTrack = () => {
             artist_id: user.id,
           },
         ])
+      if (uploadTrackError) throw uploadTrackError
 
-      if (uploadTrackError) {
-        throw uploadTrackError
-      }
+      // return track
       return uploadTrackData
     } catch (error) {
       console.log(error.message)
+      throw error
     }
   }
 
+  // add track mutation
   const {
     mutateAsync: addTrack,
     isLoading,
     isError,
-    error,
   } = useMutation(handleAddTrack, {
     onSuccess: () => {
       queryClient.invalidateQueries(['tracks'])
@@ -126,7 +139,6 @@ const useAddTrack = () => {
     addTrack,
     isLoading,
     isError,
-    error,
   }
 }
 
