@@ -1,8 +1,11 @@
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
-import { DownloadIcon } from '@heroicons/react/outline'
-import { PencilAltIcon } from '@heroicons/react/outline'
-import { TrashIcon } from '@heroicons/react/outline'
+import {
+  DownloadIcon,
+  TrashIcon,
+  PencilAltIcon,
+  XIcon,
+} from '@heroicons/react/outline'
 
 import { Icon } from '@components/icon'
 import FireTrack from '@components/track/FireTrack'
@@ -49,7 +52,12 @@ const TrackIcons: React.FC = () => {
               color="white"
             />
             {isDeleting ? (
-              <span>deleting</span>
+              <Icon
+                icon={<XIcon />}
+                onClick={() => null}
+                size="md"
+                color="white"
+              />
             ) : (
               <Icon
                 icon={<TrashIcon />}
