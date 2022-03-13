@@ -1,11 +1,11 @@
 import { supabase } from '@lib/supabase'
 import { useMutation, useQueryClient } from 'react-query'
-import type { Track } from '@lib/types/track'
+import { ITrack } from '@lib/types/track'
 
 const useDeleteTrack = () => {
   const queryClient = useQueryClient()
 
-  const deleteTrack = async (track: Track): Promise<Track[]> => {
+  const deleteTrack = async (track: ITrack): Promise<ITrack[]> => {
     try {
       // delete track record from tracks table
       const { data: deletedTrackData, error: deletionError } = await supabase

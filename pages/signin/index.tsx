@@ -1,8 +1,10 @@
+import { NextPage } from 'next'
+
 import EmailAuth from '@components/auth/EmailAuth'
 import EthereumAuth from '@components/auth/EthereumAuth'
 import Layout from '@components/layout'
 
-const SignIn = () => (
+const SignIn: NextPage = () => (
   <Layout>
     <div className="h-screen flex flex-col items-center justify-center gap-6 w-80 md:w-auto">
       <h2 className="text-2xl text-gray-700">choose sign in method</h2>

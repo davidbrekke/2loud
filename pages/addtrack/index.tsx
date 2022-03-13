@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
+import { NextPage } from 'next'
 
 import Layout from '@components/layout'
 import { useAddTrack } from '@lib/hooks/useAddTrack'
 
-const AddTrack = () => {
+const AddTrack: NextPage = () => {
   const {
     title,
     setTitle,

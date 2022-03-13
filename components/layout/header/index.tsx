@@ -4,7 +4,7 @@ import HeaderContainer from '@components/layout/header/HeaderContainer'
 import Logo from '@components/layout/Logo'
 import { useAuth } from '@lib/hooks/useAuth'
 
-const Header = () => {
+const Header: React.FC = () => {
   const { session, signOut } = useAuth()
 
   return (

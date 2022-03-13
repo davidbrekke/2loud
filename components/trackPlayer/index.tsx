@@ -7,27 +7,25 @@ import { downloadAudioAsUrl } from '@lib/downloadAudio'
 import { supabase } from '@lib/supabase'
 import { useRouter } from 'next/router'
 import { Icon } from '@components/icon'
+import { ITrack } from '@lib/types/track'
 
-const TrackPlayer = ({ children }) => {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted] = useState(false)
-  const [currentTrack, setCurrentTrack] = useState(null)
-  const [audioUrl, setAudioUrl] = useState(null)
-  const [username, setUsername] = useState('')
-  const [displayPlayer, setDisplayPlayer] = useState(false)
+const TrackPlayer: React.FC = ({ children }) => {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false)
+  const [isMuted, setIsMuted] = useState<boolean>(false)
+  const [currentTrack, setCurrentTrack] = useState<ITrack | null>(null)
+  const [audioUrl, setAudioUrl] = useState<string | null>(null)
+  const [username, setUsername] = useState<string>('')
+  const [displayPlayer, setDisplayPlayer] = useState<boolean>(false)
 
   const router = useRouter()
 
   const audioPlayer = useRef()
   const progressBar = useRef()
 
-  const download = async () => {
-    return await downloadAudioAsUrl(currentTrack.audio_url)
-  }
   useEffect(() => {
     ;(async () => {
       if (!currentTrack) return
-      const url = download()
+      const url = await downloadAudioAsUrl(currentTrack.audio_url)
       setAudioUrl(url)
       if (!displayPlayer) setDisplayPlayer(true)
 

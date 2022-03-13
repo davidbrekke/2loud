@@ -4,7 +4,7 @@ import { TrackPlayerContext } from '@lib/contexts/TrackPlayerContext'
 import { TrackContext } from '@lib/contexts/TrackContext'
 import { downloadAudioAsUrl } from '@lib/downloadAudio'
 
-const TrackContainer = ({ children }) => {
+const TrackContainer: React.FC = ({ children }) => {
   const track = useContext(TrackContext)
   const {
     currentTrack,

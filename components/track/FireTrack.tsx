@@ -2,8 +2,8 @@ import { FireIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { Icon } from '@components/icon'
 
-const FireTrack = () => {
-  const [isFire, setIsFire] = useState(false)
+const FireTrack: React.FC = () => {
+  const [isFire, setIsFire] = useState<boolean>(false)
   return isFire ? (
     <Icon
       icon={<FireIcon />}

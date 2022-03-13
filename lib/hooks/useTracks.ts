@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query'
 import { supabase } from '@lib/supabase'
-import { Track } from '@lib/types/track'
+import { ITrack } from '@lib/types/track'
 
 const useTracks = () => {
-  const fetchTracks = async (): Promise<Track[]> => {
+  const fetchTracks = async (): Promise<ITrack[]> => {
     try {
       const { data: tracksData, error: tracksError } = await supabase
         .from('tracks')

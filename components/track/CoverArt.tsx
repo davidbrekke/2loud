@@ -5,7 +5,7 @@ import { MusicNoteIcon } from '@heroicons/react/solid'
 import { TrackContext } from '@lib/contexts/TrackContext'
 import { downloadArtworkAsUrl } from '@lib/downloadArtwork'
 
-const CoverArt = () => {
+const CoverArt: React.FC = () => {
   const [coverArtUrl, setCoverArtUrl] = useState<string | null>(null)
 
   const { artwork_url } = useContext(TrackContext)

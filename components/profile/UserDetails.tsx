@@ -2,8 +2,13 @@ import NoAvatar from './NoAvatar'
 import Username from './Username'
 import { Avatar } from '@components/avatar'
 import { useAuth } from '@lib/hooks/useAuth'
+import { IProfile } from '@lib/types/profile'
 
-const UserDetails = ({ profile }) => {
+interface UserDetailsProps {
+  profile: IProfile
+}
+
+const UserDetails: React.FC<UserDetailsProps> = ({ profile }) => {
   const { user } = useAuth()
 
   return profile?.id === user?.id ? (

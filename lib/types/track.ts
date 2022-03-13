@@ -1,4 +1,4 @@
-interface Track {
+interface ITrack {
   id: string
   title: string
   artwork_url: string | null
@@ -8,4 +8,4 @@ interface Track {
   updated_at: string | null
 }
 
-export type { Track }
+export type { ITrack }
