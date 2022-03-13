@@ -1,6 +1,6 @@
 import useMagicLink from '@lib/hooks/useMagicLink'
 
-const EmailAuth = () => {
+const EmailAuth: React.FC = () => {
   const {
     loading,
     sentTo,

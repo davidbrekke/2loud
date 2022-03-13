@@ -1,7 +1,7 @@
 import { supabase } from '@lib/supabase'
-import { Profile } from '@lib/types/profile'
+import { IProfile } from '@lib/types/profile'
 
-const checkUserRegistration = async (email: string): Promise<Profile> => {
+const checkUserRegistration = async (email: string): Promise<IProfile> => {
   try {
     const { data, error } = await supabase
       .from('profiles')

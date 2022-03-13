@@ -1,14 +1,12 @@
 import Track from '@components/track'
 import { useTracks } from '@lib/hooks/useTracks'
 
-const TrackList = () => {
+const TrackList: React.FC = () => {
   const { data: tracks, isLoading, isError, error } = useTracks()
 
   if (isLoading) return <p className="h-screen flex items-center">Loading...</p>
 
   if (isError) return <p className="h-screen flex items-center">{error}</p>
-
-  console.log(tracks)
 
   return (
     <div className="flex flex-col items-center w-screen space-y-6 pt-24 py-28">

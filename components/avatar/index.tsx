@@ -3,8 +3,12 @@ import Image from 'next/image'
 import { downloadAvatarAsUrl } from '@lib/downloadAvatar'
 import { useEffect, useState } from 'react'
 
-const Avatar = ({ url }: { url: string }) => {
-  const [avatarUrl, setAvatarUrl] = useState('')
+interface AvatarProps {
+  url: string
+}
+
+const Avatar: React.FC<AvatarProps> = ({ url }) => {
+  const [avatarUrl, setAvatarUrl] = useState<string>('')
 
   useEffect(() => {
     ;(async () => {

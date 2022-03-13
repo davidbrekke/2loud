@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from 'react-query'
 import { useAuth } from '@lib/hooks/useAuth'
 import { supabase } from '@lib/supabase'
 import { extractFile } from '@lib/extractFile'
-import { Track } from '@lib/types/track'
+import { ITrack } from '@lib/types/track'
 
 interface UseAddTrackReturn {
   title: string
@@ -76,7 +76,7 @@ const useAddTrack = (): UseAddTrackReturn => {
   }
 
   // upload artwork and audio to storage and add track to db
-  const handleAddTrack = async (): Promise<Track[]> => {
+  const handleAddTrack = async (): Promise<ITrack[]> => {
     try {
       // upload artwork
       if (artworkFile) {

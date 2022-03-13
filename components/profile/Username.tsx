@@ -4,11 +4,18 @@ import { useRouter } from 'next/router'
 
 import { supabase } from '@lib/supabase'
 import { checkUsername } from '@lib/checkUsername'
+import { IProfile } from '@lib/types/profile'
 
-const Username = ({ profile }) => {
-  const [newUsername, setNewUsername] = useState(profile.username || '')
-  const [isEditing, setIsEditing] = useState(false)
-  const [loading, setLoading] = useState(false)
+interface UsernameProps {
+  profile: IProfile
+}
+
+const Username: React.FC<UsernameProps> = ({ profile }) => {
+  const [newUsername, setNewUsername] = useState<string>(
+    profile?.username || ''
+  )
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const router = useRouter()
 

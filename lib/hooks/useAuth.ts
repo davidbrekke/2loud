@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 interface UseAuthReturn {
   session: AuthSession | null
   signOut: () => void
-  user: User
+  user: User | null
 }
 
 const useAuth = (): UseAuthReturn => {

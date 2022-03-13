@@ -1,8 +1,19 @@
 import { PlayIcon, PauseIcon } from '@heroicons/react/outline'
 
 import { Icon } from '@components/icon'
+import { Dispatch, SetStateAction, RefObject } from 'react'
 
-const PlayPause = ({ isPlaying, setIsPlaying, audioPlayerRef }) => {
+interface PlayPauseProps {
+  isPlaying: boolean
+  setIsPlaying: Dispatch<SetStateAction<boolean>>
+  audioPlayerRef: RefObject<HTMLAudioElement>
+}
+
+const PlayPause: React.FC<PlayPauseProps> = ({
+  isPlaying,
+  setIsPlaying,
+  audioPlayerRef,
+}) => {
   const handleClickPauseIcon = () => {
     if (isPlaying) setIsPlaying(false)
     audioPlayerRef.current.pause()

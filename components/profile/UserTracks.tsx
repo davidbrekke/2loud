@@ -3,8 +3,13 @@ import Link from 'next/link'
 import { useTracksByUserId } from '@lib/hooks/useTracksByUserId'
 import Track from '@components/track'
 import { useAuth } from '@lib/hooks/useAuth'
+import { IProfile } from '@lib/types/profile'
 
-const UserTracks = ({ profile }) => {
+interface UserTracksProps {
+  profile: IProfile
+}
+
+const UserTracks: React.FC<UserTracksProps> = ({ profile }) => {
   const { user } = useAuth()
 
   const {

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-const AnimatePage = ({ children }) => (
+const AnimatePage: React.FC = ({ children }) => (
   <motion.div
     initial="pageInitial"
     animate="pageAnimate"

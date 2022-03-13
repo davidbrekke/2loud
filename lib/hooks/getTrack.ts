@@ -1,7 +1,7 @@
 import { supabase } from '@lib/supabase'
-import { Track } from '@lib/types/track'
+import { ITrack } from '@lib/types/track'
 
-const getTrack = async (id: string): Promise<Track[]> => {
+const getTrack = async (id: string): Promise<ITrack[]> => {
   try {
     let { data: trackData, error: trackError } = await supabase
       .from('tracks')
