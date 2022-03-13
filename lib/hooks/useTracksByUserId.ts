@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query'
 
 import { supabase } from '@lib/supabase'
-import { Track } from '@lib/types/track'
+import { ITrack } from '@lib/types/track'
 
 const useTracksByUserId = (id: string) => {
-  const fetchTracksByUserId = async (id: string): Promise<Track[]> => {
+  const fetchTracksByUserId = async (id: string): Promise<ITrack[]> => {
     try {
       let { data: tracksData, error: tracksError } = await supabase
         .from('tracks')

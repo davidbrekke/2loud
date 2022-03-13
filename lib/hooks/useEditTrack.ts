@@ -13,7 +13,7 @@ import { supabase } from '@lib/supabase'
 import { extractFile } from '@lib/extractFile'
 import { downloadAudioAsUrl } from '@lib/downloadAudio'
 import { downloadArtworkAsUrl } from '@lib/downloadArtwork'
-import { Track } from '@lib/types/track'
+import { ITrack } from '@lib/types/track'
 
 // TODO: delete old artwork and audio files if new artwork or audio is uploaded
 
@@ -35,7 +35,7 @@ interface UseEditTrackReturn {
   isError: boolean
 }
 
-const useEditTrack = (track: Track): UseEditTrackReturn => {
+const useEditTrack = (track: ITrack): UseEditTrackReturn => {
   const { user } = useAuth()
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -125,7 +125,7 @@ const useEditTrack = (track: Track): UseEditTrackReturn => {
     }
   }
 
-  const handleUpdateTrack = async (): Promise<Track[]> => {
+  const handleUpdateTrack = async (): Promise<ITrack[]> => {
     try {
       // upload new artwork
       if (newArtwork && artworkFile) {

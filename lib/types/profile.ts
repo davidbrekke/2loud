@@ -1,10 +1,10 @@
-interface Profile {
+interface IProfile {
   id: string
   username: string | null
   email: string
-  avatarUrl: string | null
+  avatar_url: string | null
   created_at: string
   updated_at: string | null
 }
 
-export type { Profile }
+export type { IProfile }

@@ -4,8 +4,8 @@ import { supabase } from '@lib/supabase'
 import { TrackContext } from '@lib/contexts/TrackContext'
 import { useRouter } from 'next/router'
 
-const TrackDetails = () => {
-  const [username, setUsername] = useState('')
+const TrackDetails: React.FC = () => {
+  const [username, setUsername] = useState<string>('')
 
   const { title, artist_id } = useContext(TrackContext)
 

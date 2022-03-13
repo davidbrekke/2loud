@@ -1,14 +1,11 @@
-const Icon = ({
-  icon,
-  onClick,
-  size,
-  color,
-}: {
+interface IconProps {
   icon: any
   onClick: any | null
   size: 'sm' | 'md' | 'lg' | 'xl'
   color: 'orange' | 'white'
-}) => (
+}
+
+const Icon: React.FC<IconProps> = ({ icon, onClick, size, color }) => (
   <div
     onClick={onClick ? onClick : null}
     className={`

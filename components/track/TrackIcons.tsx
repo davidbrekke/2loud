@@ -11,7 +11,7 @@ import { useAuth } from '@lib/hooks/useAuth'
 import { useDeleteTrack } from '@lib/hooks/useDeleteTrack'
 import { TrackContext } from '@lib/contexts/TrackContext'
 
-const TrackIcons = () => {
+const TrackIcons: React.FC = () => {
   const { session, user } = useAuth()
   const track = useContext(TrackContext)
 

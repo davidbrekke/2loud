@@ -1,16 +1,17 @@
 import { UserCircleIcon } from '@heroicons/react/outline'
-import { extractFile } from '@lib/extractFile'
-import { useAuth } from '@lib/hooks/useAuth'
-import { supabase } from '@lib/supabase'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 
-const NoAvatar = () => {
-  const [previewAvatarUrl, setPreviewAvatarUrl] = useState(null)
-  const [avatarFile, setAvatarFile] = useState(null)
-  const [avatarFileName, setAvatarFileName] = useState(null)
-  const [uploadingAvatar, setUploadingAvatar] = useState(false)
+import { extractFile } from '@lib/extractFile'
+import { useAuth } from '@lib/hooks/useAuth'
+import { supabase } from '@lib/supabase'
+
+const NoAvatar: React.FC = () => {
+  const [previewAvatarUrl, setPreviewAvatarUrl] = useState<string | null>(null)
+  const [avatarFile, setAvatarFile] = useState<File | null>(null)
+  const [avatarFileName, setAvatarFileName] = useState<string | null>(null)
+  const [uploadingAvatar, setUploadingAvatar] = useState<boolean>(false)
 
   const { user } = useAuth()
   const router = useRouter()

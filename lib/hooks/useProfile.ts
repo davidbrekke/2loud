@@ -1,12 +1,12 @@
 import { supabase } from '@lib/supabase'
 import { useQuery } from 'react-query'
-import { Profile } from '@lib/types/profile'
+import { IProfile } from '@lib/types/profile'
 
 // GET PROFILE BY USERNAME
-const useProfileByUsername = (username: string | string[]) => {
+const useProfileByUsername = (username: string) => {
   const fetchProfileByUsername = async (
-    username: string | string[]
-  ): Promise<Profile[]> => {
+    username: string
+  ): Promise<IProfile> => {
     if (!username) return
     const { data: profileData, error: usernameError } = await supabase
       .from('profiles')
@@ -23,7 +23,7 @@ const useProfileByUsername = (username: string | string[]) => {
 
 // GET PROFILE BY ID
 const useProfileById = (id: string) => {
-  const fetchProfileById = async (id: string): Promise<Profile[]> => {
+  const fetchProfileById = async (id: string): Promise<IProfile> => {
     if (!id) return
     const { data: profileData, error: usernameError } = await supabase
       .from('profiles')

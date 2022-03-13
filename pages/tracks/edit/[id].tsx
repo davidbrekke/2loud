@@ -1,12 +1,17 @@
 import Image from 'next/image'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
+import { NextPage } from 'next'
 
 import Layout from '@components/layout'
 import { useEditTrack } from '@lib/hooks/useEditTrack'
 import { getTrack } from '@lib/hooks/getTrack'
-import { Track } from '@lib/types/track'
+import { ITrack } from '@lib/types/track'
 
-const EditTrack = ({ track }: { track: Track }) => {
+interface EditTrackProps {
+  track: ITrack
+}
+
+const EditTrack: NextPage<EditTrackProps> = ({ track }) => {
   const {
     title,
     setTitle,

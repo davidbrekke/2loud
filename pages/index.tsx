@@ -1,10 +1,11 @@
 import Layout from '@components/layout'
 import TrackList from '@components/trackList'
+import { NextPage } from 'next'
 
-export default function App() {
-  return (
-    <Layout>
-      <TrackList />
-    </Layout>
-  )
-}
+const App: NextPage = () => (
+  <Layout>
+    <TrackList />
+  </Layout>
+)
+
+export default App
